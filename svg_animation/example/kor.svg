@@ -1,0 +1,38 @@
+<svg id="z12738" class="acjk" version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <style>
+    <![CDATA[
+      @keyframes zk {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+      svg.acjk path[clip-path] {
+        --t: 0.8s;
+        animation: zk var(--t) linear forwards var(--d);
+        stroke-dasharray: 3337; /* Adjust this value based on the length of the path */
+        stroke-dashoffset: 3337; /* Same value as stroke-dasharray initially */
+        stroke-width: 128;
+        stroke-linecap: round;
+        fill: none;
+        stroke: #000;
+      }
+      svg.acjk path[id] {
+        fill: #ccc;
+      }
+    ]]>
+  </style>
+  <defs>
+    <clipPath id="z12738c1">
+      <use xlink:href="#z12738d1"/>
+    </clipPath>
+  </defs>
+  <path
+    style="font-size:341.333px;font-family:'Noto Serif Khmer';-inkscape-font-specification:'Noto Serif Khmer';stroke:#696969"
+    d="m 318.47572,256.83481 v 107.86123 h -8.87466 V 255.12815 q 0,-10.23999 -7.50932,-18.77332 -7.168,-8.87465 -19.79732,-13.99465 -12.62932,-5.46133 -28.33064,-5.46133 -15.70132,0 -28.33064,5.46133 -12.62932,5.12 -20.13865,13.99465 -7.50932,8.53333 -7.50932,18.77332 v 109.56789 h -8.87466 V 256.83481 q 0,-14.33598 8.87466,-25.25864 8.87466,-10.92265 23.55198,-17.06665 14.67732,-6.48533 32.42663,-6.48533 17.74932,0 32.42664,6.48533 14.67732,6.144 23.21064,17.40798 8.87466,10.92266 8.87466,24.91731 z"
+    id="z12738d1" />
+  <path 
+    style="fill: none; stroke: #000; stroke-width: 20; stroke-dasharray: 2000; stroke-dashoffset: 2000; animation: zk 4s linear forwards;" 
+    clip-path="url(#z12738c1)" 
+    d="m 192.44548,359.94432 1.18793,-111.6659 17.81903,-23.7587 36.82598,-8.31554 h 33.26218 l 22.57077,16.63109 10.69141,14.25522 -1.18793,117.60557 v 0"
+    id="path2" />
+</svg>
