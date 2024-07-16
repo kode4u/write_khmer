@@ -3,6 +3,7 @@ import 'package:dictionary/states/app_state.dart';
 import 'package:dictionary/widgets/drawing_area.dart';
 import 'package:flutter/material.dart';
 import 'package:dictionary/widgets/k_icon_button.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/animated_svg.dart';
@@ -20,7 +21,6 @@ class _DrawScreenState extends State<DrawScreen>
   @override
   void initState() {
     super.initState();
-    Get.find<AppState>().playBGMusic();
   }
 
   @override
@@ -64,9 +64,10 @@ class _DrawScreenState extends State<DrawScreen>
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          KIconButton('assets/ui/ui_play.svg', () {}),
-          KIconButton('assets/ui/ui_play.svg', () {}),
-          KIconButton('assets/ui/ui_play.svg', () {}),
+          KIconButton('assets/ui/ui_play.svg', () {
+            AudioPlayer p = AudioPlayer();
+            p.play(AssetSource('sounds/ខ.mp3'));
+          }),
         ],
       ),
     );

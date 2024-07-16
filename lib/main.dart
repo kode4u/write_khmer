@@ -25,9 +25,7 @@ class MyApp extends StatelessWidget {
     return KMainScreen(translation: translation, pages: [
       GetPage(
         name: '/',
-        page: () => KHomeScreen(
-          child: MainScreen(),
-        ),
+        page: () => MainScreen(),
       ),
     ]);
   }

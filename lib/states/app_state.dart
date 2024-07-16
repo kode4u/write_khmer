@@ -10,6 +10,8 @@ class AppState extends GetxController {
   final AudioPlayer bgPlayer = AudioPlayer();
   final AudioPlayer tapPlayer = AudioPlayer();
 
+  var selectedContent = 0.obs;
+
   AppState() {}
 
   void playBGMusic() {

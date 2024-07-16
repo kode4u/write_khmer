@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:dictionary/widgets/k_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -36,13 +37,18 @@ class _DrawingAreaState extends State<DrawingArea> {
   var _showOverlay = false;
   final AudioPlayer _audioPlayer = AudioPlayer();
 
+  int star = 0;
+
   void playLevelup() async {
     await _audioPlayer.play(AssetSource('sounds/levelup.mp3'));
   }
 
+  void playInternetSound(String url) async {
+    await _audioPlayer.play(UrlSource(url));
+  }
+
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _audioPlayer.dispose();
   }
@@ -122,24 +128,38 @@ class _DrawingAreaState extends State<DrawingArea> {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 16,
+            ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Positioned(
-                  top: 50,
-                  left: 20,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        correctness = 0.0;
-                        points.clear();
-                      });
-                    },
-                    child: SvgPicture.asset(
-                      'assets/ui/ui_wrong.svg',
-                      width: 64,
-                    ),
-                  ),
+                const SizedBox(
+                  width: 16,
+                ),
+                KIconButton(
+                  'assets/ui/ui_previous.svg',
+                  () {},
+                  height: 48,
+                ),
+                const Spacer(),
+                KIconButton(
+                  'assets/ui/ui_wrong.svg',
+                  () {
+                    setState(() {
+                      correctness = 0.0;
+                      points.clear();
+                    });
+                  },
+                  height: 48,
+                ),
+                const Spacer(),
+                KIconButton(
+                  'assets/ui/ui_next.svg',
+                  () {},
+                  height: 48,
+                ),
+                const SizedBox(
+                  width: 16,
                 ),
               ],
             ),
@@ -180,7 +200,7 @@ class _DrawingAreaState extends State<DrawingArea> {
         ),
         DarkOverlay(
             showOverlay: _showOverlay,
-            numStars: 3,
+            numStars: star,
             onClose: () {
               setState(() {
                 _showOverlay = false;
@@ -236,16 +256,20 @@ class _DrawingAreaState extends State<DrawingArea> {
       correctness = coverageRatio;
     });
     if (correctness >= 0.50) {
+      star = 1;
       setState(() {
         playLevelup();
         _showOverlay = true;
       });
     } else if (correctness >= 0.60) {
+      star = 2;
       setState(() {
         playLevelup();
         _showOverlay = true;
       });
     } else if (correctness >= 0.80) {
+      star = 3;
+
       setState(() {
         playLevelup();
         _showOverlay = true;

@@ -1,4 +1,6 @@
+import 'package:dictionary/widgets/k_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:async';
 
@@ -7,7 +9,8 @@ class DarkOverlay extends StatefulWidget {
   final int numStars;
   final VoidCallback onClose;
 
-  const DarkOverlay({super.key, 
+  const DarkOverlay({
+    super.key,
     required this.showOverlay,
     required this.numStars,
     required this.onClose,
@@ -18,32 +21,17 @@ class DarkOverlay extends StatefulWidget {
 }
 
 class _DarkOverlayState extends State<DarkOverlay> {
-  late List<int> _starSequence;
-  Timer? _timer;
+  double wSmallStar = 64;
+  double wBigStar = 64;
 
   @override
   void initState() {
     super.initState();
-    _starSequence = List.generate(widget.numStars, (index) => index);
-    _startStarAnimation();
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
     super.dispose();
-  }
-
-  void _startStarAnimation() {
-    int index = 0;
-    _timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
-      if (index < widget.numStars) {
-        setState(() {});
-        index++;
-      } else {
-        timer.cancel();
-      }
-    });
   }
 
   @override
@@ -51,6 +39,22 @@ class _DarkOverlayState extends State<DarkOverlay> {
     if (!widget.showOverlay) {
       return const SizedBox.shrink();
     }
+    var ssE = SvgPicture.asset(
+      'assets/ui/ui_star_en.svg',
+      width: wSmallStar,
+    );
+    var ssD = SvgPicture.asset(
+      'assets/ui/ui_star_dis.svg',
+      width: wSmallStar,
+    );
+    var sbE = SvgPicture.asset(
+      'assets/ui/ui_star_en.svg',
+      width: wBigStar,
+    );
+    var sbD = SvgPicture.asset(
+      'assets/ui/ui_star_dis.svg',
+      width: wBigStar,
+    );
 
     return Positioned.fill(
       child: Container(
@@ -60,26 +64,25 @@ class _DarkOverlayState extends State<DarkOverlay> {
           children: [
             Lottie.asset('assets/tick.json', width: 100),
             const SizedBox(height: 20),
-            const Text("អបអរសាទរ", style: TextStyle(color: Colors.white, fontFamily: "Sr", fontSize: 28),),
-            const SizedBox(height: 20),
-            Wrap(
-              alignment: WrapAlignment.center,
-              children: List.generate(widget.numStars, (index) {
-                
-                return Visibility(
-                  visible: index < _starSequence.length,
-                  child: AnimatedOpacity(
-                    opacity: _starSequence.contains(index) ? 1.0 : 0.0,
-                    duration: const Duration(milliseconds: 500),
-                    child: Lottie.asset('assets/star.json', width: 96),
-                  ),
-                );
-              }),
+            const Text(
+              "អបអរសាទរ",
+              style: TextStyle(
+                  color: Colors.white, fontFamily: "Sr", fontSize: 28),
             ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: widget.numStars == 0
+                    ? [ssD, sbD, ssD]
+                    : (widget.numStars == 1
+                        ? [ssE, sbD, ssD]
+                        : (widget.numStars == 2
+                            ? [ssE, sbE, ssD]
+                            : [ssE, sbE, ssE]))),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: widget.onClose,
-              child: const Text("Close"),
+            KButton(
+              "Close",
+              widget.onClose,
             ),
           ],
         ),

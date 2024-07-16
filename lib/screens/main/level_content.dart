@@ -3,24 +3,23 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../drawing/draw_screen.dart';
 
-class GridScreen extends StatelessWidget {
+class LevelContent extends StatelessWidget {
   List data = List.generate(33, (index) => {'text': 'ឡ', 'score': 2});
 
-  GridScreen({super.key});
+  LevelContent({super.key});
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset(
-              'assets/bg/mountain.png',
-              fit: BoxFit.cover,
-            ),
-          ),
-          GridView.builder(
+    double height = MediaQuery.of(context).size.height;
+    return Stack(
+      children: [
+        Positioned(
+          top: 220,
+          left: 10,
+          right: 10,
+          bottom: 10,
+          child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3, // Number of items per row
               crossAxisSpacing: 4.0, // Horizontal spacing between items
@@ -97,8 +96,8 @@ class GridScreen extends StatelessWidget {
               );
             },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
