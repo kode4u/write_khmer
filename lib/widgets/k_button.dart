@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:dictionary/states/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,14 +7,18 @@ import 'package:get/get.dart';
 class KButton extends StatefulWidget {
   final String text;
   final VoidCallback onPressed;
+  double size;
+  double height;
+  double marginTop;
 
-  const KButton(this.text, this.onPressed, {super.key});
+  KButton(this.text, this.onPressed,
+      {this.size = 32, this.height = 64, this.marginTop = 10, super.key});
 
   @override
-  _KButtonState createState() => _KButtonState();
+  KButtonState createState() => KButtonState();
 }
 
-class _KButtonState extends State<KButton> with SingleTickerProviderStateMixin {
+class KButtonState extends State<KButton> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   bool _isPressed = false;
@@ -85,13 +88,15 @@ class _KButtonState extends State<KButton> with SingleTickerProviderStateMixin {
                 children: [
                   SvgPicture.asset(
                     'assets/ui/ui_button_gold.svg',
-                    width: 128,
-                    height: 64,
+                    height: widget.height,
                     fit: BoxFit.fill,
                   ),
                   Positioned(
-                    top: 10,
-                    child: KText(widget.text),
+                    top: widget.marginTop,
+                    child: KText(
+                      widget.text,
+                      size: widget.size,
+                    ),
                   ),
                 ],
               ),

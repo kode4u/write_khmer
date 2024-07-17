@@ -1,16 +1,20 @@
 import 'package:dictionary/screens/main/category_content.dart';
+import 'package:dictionary/screens/main/leaderboard_content.dart';
 import 'package:dictionary/screens/main/level_content.dart';
 import 'package:dictionary/screens/main/main_content.dart';
+import 'package:dictionary/widgets/drawing_area.dart';
+import 'package:dictionary/widgets/k_gradient_outline_text.dart';
 import 'package:dictionary/widgets/k_icon_button.dart';
 import 'package:dictionary/widgets/k_score.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../states/app_state.dart';
 
 class MainScreen extends StatefulWidget {
-  MainScreen({super.key});
+  const MainScreen({super.key});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -18,9 +22,11 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final List<Widget> _pages = [
-    MainContent(), // Your first page's content
-    CategoryContent(),
-    LevelContent(),
+    const MainContent(), // Your first page's content
+    const CategoryContent(),
+    const LevelContent(),
+    DrawingArea(),
+    LeaderboardContent(),
   ];
   int selectedIndex = 0;
 
@@ -28,6 +34,12 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     selectedIndex = Get.find<AppState>().selectedContent.value;
+    Get.find<AppState>().playBGMusic();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -59,16 +71,33 @@ class _MainScreenState extends State<MainScreen> {
                     () => KScore(Get.find<AppState>().score.value.toString())),
               ),
             ),
+            Obx(
+              () => Get.find<AppState>().selectedContent.value == 3
+                  ? Container()
+                  : Positioned(
+                      top: 160,
+                      left: 10,
+                      right: 10,
+                      child: Center(
+                        child: KGradientOutlineText(
+                          'app_name'.tr,
+                        ),
+                      ),
+                    ),
+            ),
             Positioned(
-              top: 200,
-              left: 10,
-              right: 10,
+              top: 80,
+              left: 20,
               child: Center(
-                child: Text(
-                  'app_name'.tr,
-                  style: TextStyle(
-                      fontSize: 32, color: Colors.white, fontFamily: 'Muol'),
-                ),
+                child: Obx(() => Get.find<AppState>().selectedContent.value != 0
+                    ? KIconButton(
+                        'assets/ui/ui_previous.svg',
+                        () {
+                          Get.find<AppState>().selectedContent.value--;
+                        },
+                        height: 32,
+                      )
+                    : Container()),
               ),
             ),
             Positioned(

@@ -1,27 +1,31 @@
+import 'dart:ui';
+
 import 'package:dictionary/widgets/k_button.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
-import 'dart:async';
 
 class DarkOverlay extends StatefulWidget {
   final bool showOverlay;
   final int numStars;
   final VoidCallback onClose;
+  final drawImage;
 
   const DarkOverlay({
     super.key,
+    required this.drawImage,
     required this.showOverlay,
     required this.numStars,
     required this.onClose,
   });
 
   @override
-  _DarkOverlayState createState() => _DarkOverlayState();
+  DarkOverlayState createState() => DarkOverlayState();
 }
 
-class _DarkOverlayState extends State<DarkOverlay> {
-  double wSmallStar = 64;
+class DarkOverlayState extends State<DarkOverlay> {
+  double wSmallStar = 48;
   double wBigStar = 64;
 
   @override
@@ -68,6 +72,23 @@ class _DarkOverlayState extends State<DarkOverlay> {
               "អបអរសាទរ",
               style: TextStyle(
                   color: Colors.white, fontFamily: "Sr", fontSize: 28),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 8, bottom: 8),
+              width: 200,
+              height: 200,
+              child: Stack(
+                children: [
+                  SvgPicture.asset(
+                    'assets/ui/ui_sq_box.svg',
+                    width: 200,
+                  ),
+                  FittedBox(
+                    child: widget.drawImage,
+                    fit: BoxFit.contain,
+                  )
+                ],
+              ),
             ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.center,

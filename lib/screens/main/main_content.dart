@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 
 import '../../states/app_state.dart';
 import '../../widgets/k_icon_button.dart';
 import '../../widgets/k_menu_button.dart';
 import '../../widgets/k_progress.dart';
-import '../../widgets/k_score.dart';
 
 class MainContent extends StatelessWidget {
+  const MainContent({super.key});
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Stack(
       children: [
         // Positioned(
@@ -55,7 +53,11 @@ class MainContent extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  KIconButton('assets/ui/ui_ranking.svg', () {}),
+                  KIconButton('assets/ui/ui_ranking.svg', () {
+                    Get.find<AppState>().lastSelectedIndex =
+                        Get.find<AppState>().selectedContent;
+                    Get.find<AppState>().selectedContent.value = 4;
+                  }),
                   const SizedBox(
                     width: 12,
                   ),

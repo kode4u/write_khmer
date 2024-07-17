@@ -13,10 +13,10 @@ class CommonTabAnimationView extends StatefulWidget {
   });
 
   @override
-  _CommonTabAnimationViewState createState() => _CommonTabAnimationViewState();
+  CommonTabAnimationViewState createState() => CommonTabAnimationViewState();
 }
 
-class _CommonTabAnimationViewState extends State<CommonTabAnimationView>
+class CommonTabAnimationViewState extends State<CommonTabAnimationView>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 

@@ -1,3 +1,4 @@
+import 'package:dictionary/data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,8 +10,6 @@ class CategoryContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Stack(
       children: [
         Positioned.fill(
@@ -24,18 +23,28 @@ class CategoryContent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   KButton("ព្យញ្ជនៈ", () {
+                    Get.find<AppState>().data.value = DataAlpha().d;
                     Get.find<AppState>().selectedContent.value = 2;
+                    print('data is ${Get.find<AppState>().data.toString()}');
                   }),
-                  KButton("លេខ", () {
+                  KButton("លេខខ្មែរ", () {
                     Get.find<AppState>().selectedContent.value = 2;
+                    Get.find<AppState>().data.value = DataNumber().d;
+                  }),
+                  KButton("លេខបារាំង", () {
+                    Get.find<AppState>().selectedContent.value = 2;
+                    Get.find<AppState>().data.value = DataNumber().d;
                   }),
                   KButton("ជើងព្យញ្ជនៈ", () {
+                    Get.find<AppState>().data.value = DataAlphaLeg().d;
                     Get.find<AppState>().selectedContent.value = 2;
                   }),
                   KButton("ស្រៈ", () {
+                    Get.find<AppState>().data.value = DataVowel().d;
                     Get.find<AppState>().selectedContent.value = 2;
                   }),
                   KButton("ស្រៈពេញតួ", () {
+                    Get.find<AppState>().data.value = DataIndependenceVowel().d;
                     Get.find<AppState>().selectedContent.value = 2;
                   }),
                 ],

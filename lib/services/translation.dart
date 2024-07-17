@@ -4,7 +4,7 @@ Map<String, Map<String, String>> get translation => {
         'app_version': 'v2.0.1',
         'start': 'Start',
         'setting': 'Settings',
-        'rank': 'Rank',
+        'close': 'Close',
       },
       'km_KH': {
         'app_name': 'រៀនសរសេរខ្មែរ',
@@ -12,5 +12,6 @@ Map<String, Map<String, String>> get translation => {
         'start': 'ចាប់ផ្ដើម',
         'setting': 'ការកំណត់',
         'rank': 'ចំណាត់ថ្នាក់',
+        'close': 'បិទ',
       },
     };

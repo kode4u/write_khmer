@@ -1,22 +1,20 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:dictionary/states/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dictionary/widgets/k_text.dart';
 import 'package:get/get.dart';
 
 class KIconButton extends StatefulWidget {
   final String icon;
   final VoidCallback onPressed;
-  double height;
+  final double height;
 
-  KIconButton(this.icon, this.onPressed, {this.height = 64, super.key});
+  const KIconButton(this.icon, this.onPressed, {this.height = 64, super.key});
 
   @override
-  _KIconButtonState createState() => _KIconButtonState();
+  KIconButtonState createState() => KIconButtonState();
 }
 
-class _KIconButtonState extends State<KIconButton>
+class KIconButtonState extends State<KIconButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;

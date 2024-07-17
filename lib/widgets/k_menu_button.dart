@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:dictionary/states/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,10 +11,10 @@ class KMenuButton extends StatefulWidget {
   const KMenuButton(this.text, this.onPressed, {super.key});
 
   @override
-  _KMenuButtonState createState() => _KMenuButtonState();
+  KMenuButtonState createState() => KMenuButtonState();
 }
 
-class _KMenuButtonState extends State<KMenuButton>
+class KMenuButtonState extends State<KMenuButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;

@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class KStyleContainer extends StatelessWidget {
-  var listColor;
-  var svgPath;
-  var title;
-  var child;
+  final List<Color> listColor;
+  final String svgPath;
+  final String title;
+  final Widget child;
 
-  KStyleContainer({super.key, required this.child,required this.title, required this.svgPath, required this.listColor});
+  const KStyleContainer(
+      {super.key,
+      required this.child,
+      required this.title,
+      required this.svgPath,
+      required this.listColor});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -19,7 +24,7 @@ class KStyleContainer extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          clipBehavior: Clip.antiAlias,
+            clipBehavior: Clip.antiAlias,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -30,14 +35,11 @@ class KStyleContainer extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                
-                Align(
-                  alignment: Alignment.center,
-                  child: child
-                ),
-                
+                Align(alignment: Alignment.center, child: child),
                 Positioned(
-                  left: 0, right: 0, bottom: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
                   child: Transform(
                     transform: Matrix4.identity()..translate(0.0, 0),
                     child:

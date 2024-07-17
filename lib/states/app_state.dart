@@ -9,10 +9,20 @@ class AppState extends GetxController {
   KAds ads = KAds();
   final AudioPlayer bgPlayer = AudioPlayer();
   final AudioPlayer tapPlayer = AudioPlayer();
+  var lastSelectedIndex = 0.obs;
+  var currentIndex = 0.obs;
+  var data = [
+    {
+      'c': 'ក',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    }
+  ].obs;
 
   var selectedContent = 0.obs;
 
-  AppState() {}
+  AppState();
 
   void playBGMusic() {
     bgPlayer.play(AssetSource('sounds/bg_music.mp3'), volume: volume);

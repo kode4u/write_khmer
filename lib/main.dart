@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:kode4u/screens/k_home_screen.dart';
 import 'package:kode4u/screens/k_main_screen.dart';
 
 void main() async {
@@ -14,18 +13,18 @@ void main() async {
   await GetStorage.init();
   Get.put(AppState());
   setTheme();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return KMainScreen(translation: translation, pages: [
       GetPage(
         name: '/',
-        page: () => MainScreen(),
+        page: () => const MainScreen(),
       ),
     ]);
   }

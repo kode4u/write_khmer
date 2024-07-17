@@ -1,31 +1,25 @@
 import 'dart:typed_data';
-
 import 'package:audioplayers/audioplayers.dart';
-import 'package:dictionary/widgets/k_icon_button.dart';
+import 'package:dictionary/states/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dictionary/widgets/k_dark_overlay.dart';
+import 'package:get/get.dart';
 import 'dart:ui' as ui;
 
 import 'grid_widget.dart';
+import 'k_dark_overlay.dart';
+import 'k_icon_button.dart';
 
 class DrawingArea extends StatefulWidget {
-  final double width;
-  final double height;
-  String text;
-  DrawingArea(
-      {super.key,
-      required this.text,
-      required this.width,
-      required this.height});
+  DrawingArea({super.key});
+
   @override
-  _DrawingAreaState createState() => _DrawingAreaState();
+  DrawingAreaState createState() => DrawingAreaState();
 }
 
-class _DrawingAreaState extends State<DrawingArea> {
+class DrawingAreaState extends State<DrawingArea> {
   List<Offset?> points = [];
-
   bool showText = true;
   bool showGrid = true;
   bool showDrawing = true;
@@ -36,15 +30,12 @@ class _DrawingAreaState extends State<DrawingArea> {
   ui.Image? capturedTextImage;
   var _showOverlay = false;
   final AudioPlayer _audioPlayer = AudioPlayer();
-
+  bool isProcessing = false;
   int star = 0;
 
-  void playLevelup() async {
-    await _audioPlayer.play(AssetSource('sounds/levelup.mp3'));
-  }
-
-  void playInternetSound(String url) async {
-    await _audioPlayer.play(UrlSource(url));
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -55,165 +46,167 @@ class _DrawingAreaState extends State<DrawingArea> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width - 16;
+    AppState app = Get.find<AppState>();
     return Stack(
       children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: widget.width,
-              height: widget.height,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(0)),
-              clipBehavior: Clip.antiAlias,
+            SizedBox(
+              width: width,
+              height: width,
               child: Stack(
                 children: [
-                  !showGrid
-                      ? Container()
-                      : GridWidget(
-                          width: widget.width,
-                          height: widget.height,
-                          rows: 12,
-                          columns: 3,
-                          gridColor: Colors.black87),
-                  !showText
-                      ? Container()
-                      : SizedBox(
-                          width: 300,
-                          height: 300,
-                          child: RepaintBoundary(
-                            key: _textKey,
-                            child: CustomPaint(
-                              painter: TextPainterWidget(widget.text),
-                              size: const Size(300, 300),
-                            ),
+                  Positioned.fill(
+                    child: SvgPicture.asset('assets/ui/ui_sq_box.svg'),
+                  ),
+                  if (showGrid)
+                    GridWidget(
+                        width: width,
+                        height: width,
+                        rows: 12,
+                        columns: 3,
+                        gridColor: Colors.black87),
+                  if (showText)
+                    SizedBox(
+                      width: width,
+                      height: width,
+                      child: RepaintBoundary(
+                        key: _textKey,
+                        child: Obx(
+                          () => CustomPaint(
+                            painter: TextPainterWidget(Get.find<AppState>()
+                                .data[Get.find<AppState>().currentIndex.value]
+                                    ['c']
+                                .toString()),
+                            size: Size(width, width),
                           ),
                         ),
-                  !showDrawing
-                      ? Container()
-                      : SizedBox(
-                          width: 300,
-                          height: 300,
-                          child: RepaintBoundary(
-                            key: _key,
-                            child: GestureDetector(
-                              onPanUpdate: (details) {
-                                setState(() {
-                                  final RenderBox renderBox =
-                                      _key.currentContext!.findRenderObject()
-                                          as RenderBox;
-                                  points.add(renderBox
-                                      .globalToLocal(details.globalPosition));
-                                });
-                              },
-                              onPanEnd: (details) async {
-                                points.add(
-                                    null); // Add a null point to indicate the end of a line
-
-                                //check
-                                await _captureDrawing();
-                                if (capturedTextImage == null) {
-                                  await _captureTextImage();
-                                }
-                                _calculateCoveragePercentage(
-                                    capturedImage!, capturedTextImage!);
-                              },
-                              child: CustomPaint(
-                                painter: DrawingPainter(points: points),
-                                size: const Size(300, 300),
-                              ),
-                            ),
+                      ),
+                    ),
+                  if (showDrawing)
+                    SizedBox(
+                      width: width,
+                      height: width,
+                      child: RepaintBoundary(
+                        key: _key,
+                        child: GestureDetector(
+                          onPanUpdate: (details) {
+                            _onPanUpdate(details);
+                          },
+                          onPanEnd: (details) async {
+                            _onPanEnd();
+                          },
+                          child: CustomPaint(
+                            painter: DrawingPainter(points: points),
+                            size: Size(width, width),
                           ),
                         ),
+                      ),
+                    ),
                 ],
               ),
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            Row(
+            const SizedBox(height: 16),
+            Stack(
+              alignment: Alignment.center,
               children: [
-                const SizedBox(
-                  width: 16,
-                ),
-                KIconButton(
-                  'assets/ui/ui_previous.svg',
-                  () {},
-                  height: 48,
-                ),
-                const Spacer(),
-                KIconButton(
-                  'assets/ui/ui_wrong.svg',
-                  () {
-                    setState(() {
-                      correctness = 0.0;
-                      points.clear();
-                    });
-                  },
-                  height: 48,
-                ),
-                const Spacer(),
-                KIconButton(
-                  'assets/ui/ui_next.svg',
-                  () {},
-                  height: 48,
-                ),
-                const SizedBox(
-                  width: 16,
+                SvgPicture.asset('assets/ui/ui_place_holder.svg'),
+                Container(
+                  margin: const EdgeInsets.only(left: 5, top: 12, right: 5),
+                  child: Obx(
+                    () => Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        app.currentIndex.value == 0
+                            ? const SizedBox(
+                                width: 28,
+                                height: 28,
+                              )
+                            : KIconButton('assets/ui/ui_previous.svg', () {
+                                if (app.currentIndex > 0) {
+                                  app.currentIndex--;
+                                }
+                              }, height: 32),
+                        const SizedBox(width: 30),
+                        KIconButton(
+                          'assets/ui/ui_wrong.svg',
+                          () {
+                            setState(() {
+                              correctness = 0.0;
+                              points.clear();
+                            });
+                          },
+                          height: 40,
+                        ),
+                        const SizedBox(width: 30),
+                        app.currentIndex.value == app.data.length - 1
+                            ? const SizedBox(
+                                width: 28,
+                                height: 28,
+                              )
+                            : KIconButton('assets/ui/ui_next.svg', () {
+                                if (app.currentIndex < app.data.length - 1) {
+                                  app.currentIndex++;
+                                }
+                              }, height: 32),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
             Text("Correctness: ${correctness.toStringAsFixed(2)}"),
-            // const SizedBox(
-            //   height: 8,
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     CupertinoCheckbox(
-            //         value: showText,
-            //         onChanged: (v) {
-            //           setState(() {
-            //             showText = v!;
-            //           });
-            //         }),
-            //     const Text('អក្សរ'),
-            //     CupertinoCheckbox(
-            //         value: showGrid,
-            //         onChanged: (v) {
-            //           setState(() {
-            //             showGrid = v!;
-            //           });
-            //         }),
-            //     const Text('ក្រឡា'),
-            //     CupertinoCheckbox(
-            //         value: showDrawing,
-            //         onChanged: (v) {
-            //           setState(() {
-            //             showDrawing = v!;
-            //           });
-            //         }),
-            //     const Text('គំនូស')
-            //   ],
-            // )
           ],
         ),
         DarkOverlay(
             showOverlay: _showOverlay,
+            drawImage: CustomPaint(
+              painter: DrawingPainter(points: points),
+              size: Size(width, width),
+            ),
             numStars: star,
             onClose: () {
               setState(() {
                 _showOverlay = false;
+                points.clear();
               });
             }),
       ],
     );
   }
 
-  Offset _constrainToBounds(Offset position) {
-    double x = position.dx.clamp(0.0, widget.width);
-    double y = position.dy.clamp(0.0, widget.height);
-    return Offset(x, y);
+  void _onPanUpdate(DragUpdateDetails details) {
+    final RenderBox renderBox =
+        _key.currentContext!.findRenderObject() as RenderBox;
+    setState(() {
+      points.add(renderBox.globalToLocal(details.globalPosition));
+    });
+  }
+
+  void _onPanEnd() async {
+    points.add(null); // End of line
+    await _captureDrawing();
+    if (capturedTextImage == null) {
+      await _captureTextImage();
+    }
+    _calculateCoveragePercentage(capturedImage!, capturedTextImage!);
+  }
+
+  Future<void> _captureDrawing() async {
+    final RenderRepaintBoundary boundary =
+        _key.currentContext?.findRenderObject() as RenderRepaintBoundary;
+    final ui.Image image = await boundary.toImage(pixelRatio: 1.0);
+    capturedImage = image;
+  }
+
+  Future<void> _captureTextImage() async {
+    final RenderRepaintBoundary textBoundary =
+        _textKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+    final ui.Image textImage = await textBoundary.toImage(pixelRatio: 1.0);
+    capturedTextImage = textImage;
   }
 
   Future<double> _calculateCoveragePercentage(
@@ -229,17 +222,16 @@ class _DrawingAreaState extends State<DrawingArea> {
         (await img1.toByteData(format: ui.ImageByteFormat.rawRgba))!;
     final ByteData byteData2 =
         (await img2.toByteData(format: ui.ImageByteFormat.rawRgba))!;
-
     final Uint8List buffer1 = byteData1.buffer.asUint8List();
     final Uint8List buffer2 = byteData2.buffer.asUint8List();
 
-    final int length = buffer2.lengthInBytes;
     int coveredPixels = 0;
     int totalPixels = 0;
 
-    for (int i = 0; i < length; i += 4) {
-      final int alphaImg2 = buffer2[i + 3];
+    int totalDrawPixel = countPixel(buffer1);
 
+    for (int i = 0; i < buffer2.lengthInBytes; i += 4) {
+      final int alphaImg2 = buffer2[i + 3];
       if (alphaImg2 > 0) {
         totalPixels++;
         final int alphaImg1 = buffer1[i + 3];
@@ -252,50 +244,49 @@ class _DrawingAreaState extends State<DrawingArea> {
     final double coverageRatio =
         totalPixels > 0 ? coveredPixels / totalPixels : 0.0;
     print('cover ratio $coverageRatio');
+    print(
+        'over cover ratio drawPixel $totalDrawPixel: ${3 * totalPixels} $coveredPixels - $totalPixels : ${totalDrawPixel > 3 * totalPixels}');
     setState(() {
       correctness = coverageRatio;
     });
-    if (correctness >= 0.50) {
-      star = 1;
-      setState(() {
-        playLevelup();
-        _showOverlay = true;
-      });
-    } else if (correctness >= 0.60) {
-      star = 2;
-      setState(() {
-        playLevelup();
-        _showOverlay = true;
-      });
-    } else if (correctness >= 0.80) {
-      star = 3;
 
+    //if
+    if (correctness >= 0.80) {
+      star = 3;
+    } else if (correctness >= 0.70) {
+      star = 2;
+    } else if (correctness >= 0.60) {
+      star = 1;
+    }
+
+//if draw pixel is too much star = 0
+    if (totalDrawPixel > 3 * totalPixels) {
+      star = 0;
+      correctness = 0.59;
+    }
+
+    if (correctness >= 0.6) {
+      _playLevelUp();
       setState(() {
-        playLevelup();
         _showOverlay = true;
       });
     }
     return coverageRatio * 100;
   }
 
-  Future<void> _captureDrawing() async {
-    final RenderRepaintBoundary boundary =
-        _key.currentContext?.findRenderObject() as RenderRepaintBoundary;
-    final ui.Image image = await boundary.toImage(pixelRatio: 1.0);
-    setState(() {
-      capturedImage = image;
-    });
+  Future<void> _playLevelUp() async {
+    await _audioPlayer.play(AssetSource('sounds/levelup.mp3'));
   }
 
-  Future<void> _captureTextImage() async {
-    final RenderRepaintBoundary textBoundary =
-        _textKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
-
-    final ui.Image textImage = await textBoundary.toImage(pixelRatio: 1.0);
-
-    setState(() {
-      capturedTextImage = textImage;
-    });
+  int countPixel(Uint8List buffer) {
+    int nonTransparentPixels = 0;
+    for (int i = 0; i < buffer.lengthInBytes; i += 4) {
+      final int alpha = buffer[i + 3];
+      if (alpha > 0) {
+        nonTransparentPixels++;
+      }
+    }
+    return nonTransparentPixels;
   }
 }
 
@@ -332,19 +323,18 @@ class ImagePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Draw the image on the canvas
     canvas.drawImage(image, Offset.zero, Paint());
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
-  }
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 class TextPainterWidget extends CustomPainter {
-  final text;
+  final String text;
+
   TextPainterWidget(this.text);
+
   @override
   void paint(Canvas canvas, Size size) {
     final TextSpan textSpan = TextSpan(
@@ -353,16 +343,13 @@ class TextPainterWidget extends CustomPainter {
           color: Colors.white, fontSize: 300, fontFamily: 'Thin'),
     );
 
-    final textPainter = TextPainter(
+    final TextPainter textPainter = TextPainter(
       text: textSpan,
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
     );
 
-    textPainter.layout(
-      minWidth: 0,
-      maxWidth: size.width,
-    );
+    textPainter.layout(minWidth: 0, maxWidth: size.width);
 
     final Offset offset = Offset(
       (size.width - textPainter.width) / 2,
@@ -373,5 +360,5 @@ class TextPainterWidget extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
