@@ -1,0 +1,28 @@
+<svg id="z12736" class="acjk" version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<style>
+<![CDATA[
+@keyframes zk {
+	to {
+		stroke-dashoffset:0;
+	}
+}
+svg.acjk path[clip-path] {
+	--t:3s;
+	animation:zk var(--t) linear forwards var(--d);
+	stroke-dasharray:var(--length);
+	stroke-dashoffset:var(--length);
+	stroke-width:40;
+	stroke-linecap:round;
+	fill:none;
+	stroke:#000;
+}
+svg.acjk path[id] {fill:#ccc;}
+]]>
+</style>
+<path id="z12736d1" d="m 247.33326,185.66673 h -34.16663 v -15.83332 q 35.33329,0 40.33329,-38.83329 h 18.83332 V 355.9999 h 34.16663 v 24.99998 H 213.16663 V 355.9999 h 34.16663 z"/>
+<defs>
+	<clipPath id="z12736c1"><use xlink:href="#z12736d1"/></clipPath>
+</defs>
+<path style="--d:0s;--length:1000" clip-path="url(#z12736c1)" d="m 204.17178,179.04294 36.1227,-9.42331 23.55828,-40.83435 -3.1411,238.72392 -1.57056,58.11043 -97.37423,-3.1411 3.14111,-62.82209 163.33742,10.99387"/>
+</svg>
+  

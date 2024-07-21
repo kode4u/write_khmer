@@ -1,6 +1,8 @@
 import 'package:dictionary/data/data.dart';
+import 'package:dictionary/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kode4u/utils/k_utils.dart';
 
 import '../../states/app_state.dart';
 import '../../widgets/k_button.dart';
@@ -22,31 +24,39 @@ class CategoryContent extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  KButton("ព្យញ្ជនៈ", () {
-                    Get.find<AppState>().data.value = DataAlpha().d;
-                    Get.find<AppState>().selectedContent.value = 2;
-                    print('data is ${Get.find<AppState>().data.toString()}');
+                  KButton("alphabet".tr, () {
+                    Get.find<AppState>().data.value =
+                        KUtil.isEn() ? DataAlphaEn().d : DataAlpha().d;
+                    Get.find<AppState>().switchScreen(Screen.level);
                   }),
-                  KButton("លេខខ្មែរ", () {
-                    Get.find<AppState>().selectedContent.value = 2;
+                  KUtil.isEn()
+                      ? Container()
+                      : KButton("khmer_number".tr, () {
+                          Get.find<AppState>().data.value = DataKhmerNumber().d;
+                          Get.find<AppState>().switchScreen(Screen.level);
+                        }),
+                  KButton("roman_number".tr, () {
                     Get.find<AppState>().data.value = DataNumber().d;
+                    Get.find<AppState>().switchScreen(Screen.level);
                   }),
-                  KButton("លេខបារាំង", () {
-                    Get.find<AppState>().selectedContent.value = 2;
-                    Get.find<AppState>().data.value = DataNumber().d;
+                  KButton("alphabet_leg".tr, () {
+                    Get.find<AppState>().data.value =
+                        KUtil.isEn() ? DataAlphaEnLower().d : DataAlphaLeg().d;
+                    Get.find<AppState>().switchScreen(Screen.level);
                   }),
-                  KButton("ជើងព្យញ្ជនៈ", () {
-                    Get.find<AppState>().data.value = DataAlphaLeg().d;
-                    Get.find<AppState>().selectedContent.value = 2;
-                  }),
-                  KButton("ស្រៈ", () {
-                    Get.find<AppState>().data.value = DataVowel().d;
-                    Get.find<AppState>().selectedContent.value = 2;
-                  }),
-                  KButton("ស្រៈពេញតួ", () {
-                    Get.find<AppState>().data.value = DataIndependenceVowel().d;
-                    Get.find<AppState>().selectedContent.value = 2;
-                  }),
+                  KUtil.isEn()
+                      ? Container()
+                      : KButton("vowel".tr, () {
+                          Get.find<AppState>().data.value = DataVowel().d;
+                          Get.find<AppState>().switchScreen(Screen.level);
+                        }),
+                  KUtil.isEn()
+                      ? Container()
+                      : KButton("independence_vowel".tr, () {
+                          Get.find<AppState>().data.value =
+                              DataIndependenceVowel().d;
+                          Get.find<AppState>().switchScreen(Screen.level);
+                        }),
                 ],
               )),
         ),

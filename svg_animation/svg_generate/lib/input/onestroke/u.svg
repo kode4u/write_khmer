@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 512 512"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25)"
+   sodipodi:docname="u.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="0.63671875"
+     inkscape:cx="254.42945"
+     inkscape:cy="255.21472"
+     inkscape:window-width="1392"
+     inkscape:window-height="942"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg1" />
+  <defs
+     id="defs1" />
+  <path
+     style="font-size:341.333px;font-family:Dangrek;-inkscape-font-specification:Dangrek;text-align:center;text-anchor:middle;stroke:#000000;stroke-width:0"
+     d="m 331.99985,342.99988 h -31.33331 v -20.66665 q -15.83332,12.49999 -30.3333,19.16665 -14.49999,6.66666 -31.99997,6.66666 -29.33331,0 -45.66663,-17.83332 -16.33331,-17.99998 -16.33331,-52.66661 V 156.83339 h 31.3333 v 105.9999 q 0,14.16665 1.33333,24.33331 1.33333,9.99999 5.66666,17.16665 4.5,7.33332 11.66666,10.66665 7.16666,3.33333 20.83331,3.33333 12.16666,0 26.49998,-6.33332 14.49998,-6.33333 26.99997,-16.16665 V 156.83339 h 31.33331 z"
+     id="text1"
+     inkscape:label="text1"
+     aria-label="u" />
+  <path
+     style="fill:#000000;stroke:#000000;stroke-width:0"
+     d="m 182.18405,142.92025 9.42331,158.62576 20.41718,28.26994 29.84049,3.14111 36.1227,-9.42332 40.83436,-21.98773 -1.57056,-153.91411 v 204.17178"
+     id="path1" />
+</svg>

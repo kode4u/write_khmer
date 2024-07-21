@@ -1,20 +1,22 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:dictionary/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
 import '../../states/app_state.dart';
 
 class LevelContent extends StatefulWidget {
-  const LevelContent({Key? key}) : super(key: key);
+  const LevelContent({super.key});
 
   @override
-  _LevelContentState createState() => _LevelContentState();
+  LevelContentState createState() => LevelContentState();
 }
 
-class _LevelContentState extends State<LevelContent>
+class LevelContentState extends State<LevelContent>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  final List<int> _delays = [];
+  // final List<int> _delays = [];
 
   @override
   void initState() {
@@ -24,12 +26,11 @@ class _LevelContentState extends State<LevelContent>
       vsync: this,
     );
 
-    // Initialize delays for staggering animation
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final itemCount = Get.find<AppState>().data.length;
-      setState(() {
-        _delays.addAll(List.generate(itemCount, (index) => index * 100));
-      });
+      // setState(() {
+      //   _delays.addAll(List.generate(itemCount, (index) => index * 100));
+      // });
       _controller.forward();
     });
   }
@@ -61,22 +62,15 @@ class _LevelContentState extends State<LevelContent>
               ),
               itemCount: app.data.length, // Total number of items in the grid
               itemBuilder: (context, index) {
-                // Delay based on the item index for staggered animation
-                Future.delayed(Duration(milliseconds: _delays[index]), () {
-                  if (mounted) {
-                    setState(() {}); // Trigger a rebuild after delay
-                  }
-                });
-
                 double cardWidth = (width - 24) / 3;
                 double wSmallStar = (cardWidth - 64) / 3;
                 double wBigStar = (cardWidth - 32) / 3;
-                var ssE = SvgPicture.asset(
-                  'assets/ui/ui_star_en.svg',
-                  width: wSmallStar,
-                );
                 var ssD = SvgPicture.asset(
                   'assets/ui/ui_star_dis.svg',
+                  width: wSmallStar,
+                );
+                var ssE = SvgPicture.asset(
+                  'assets/ui/ui_star_en.svg',
                   width: wSmallStar,
                 );
                 var sbE = SvgPicture.asset(
@@ -98,8 +92,8 @@ class _LevelContentState extends State<LevelContent>
                         offset: Offset(0, 100 * (1 - animationValue)),
                         child: GestureDetector(
                           onTap: () {
-                            app.selectedContent.value = 3;
-                            app.currentIndex.value = index;
+                            Get.find<AppState>().selectedIndex.value = index;
+                            app.switchScreen(Screen.draw);
                           },
                           child: Stack(
                             alignment: Alignment.center,
@@ -128,17 +122,11 @@ class _LevelContentState extends State<LevelContent>
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: (app.data[app.currentIndex.value]
-                                              ['star'] ==
-                                          0
+                                  children: (app.data[index]['star'] == 0
                                       ? [ssD, sbD, ssD]
-                                      : (app.data[app.currentIndex.value]
-                                                  ['star'] ==
-                                              1
+                                      : (app.data[index]['star'] == 1
                                           ? [ssE, sbD, ssD]
-                                          : (app.data[app.currentIndex.value]
-                                                      ['star'] ==
-                                                  2
+                                          : (app.data[index]['star'] == 2
                                               ? [ssE, sbE, ssD]
                                               : [ssE, sbE, ssE]))),
                                 ),

@@ -1,17 +1,30 @@
 import 'package:dictionary/screens/main/category_content.dart';
+import 'package:dictionary/screens/main/language_content.dart';
 import 'package:dictionary/screens/main/leaderboard_content.dart';
 import 'package:dictionary/screens/main/level_content.dart';
 import 'package:dictionary/screens/main/main_content.dart';
-import 'package:dictionary/widgets/drawing_area.dart';
-import 'package:dictionary/widgets/k_gradient_outline_text.dart';
-import 'package:dictionary/widgets/k_icon_button.dart';
+import 'package:dictionary/screens/main/setting_content.dart';
+import 'package:dictionary/screens/main/draw_content.dart';
 import 'package:dictionary/widgets/k_score.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:kode4u/configs/k_config.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../states/app_state.dart';
+import '../../widgets/k_gradient_outline_text.dart';
+import '../../widgets/k_icon_button.dart';
+
+class Screen {
+  static const String main = 'main';
+  static const String category = 'category';
+  static const String level = 'level';
+  static const String draw = 'draw';
+  static const String leaderboard = 'leaderboard';
+  static const String setting = 'setting';
+  static const String lang = 'lang';
+}
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -21,25 +34,28 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final List<Widget> _pages = [
-    const MainContent(), // Your first page's content
-    const CategoryContent(),
-    const LevelContent(),
-    DrawingArea(),
-    LeaderboardContent(),
-  ];
   int selectedIndex = 0;
+
+  String lang = 'en';
 
   @override
   void initState() {
     super.initState();
-    selectedIndex = Get.find<AppState>().selectedContent.value;
     Get.find<AppState>().playBGMusic();
   }
 
   @override
   void dispose() {
     super.dispose();
+    firstTimeOpen();
+  }
+
+  void firstTimeOpen() {
+    GetStorage g = GetStorage();
+    lang = g.read('lang${KConfig.android_package}') ?? 'en';
+    if (lang == 'en') {
+      Get.find<AppState>().switchScreen(Screen.lang);
+    }
   }
 
   @override
@@ -49,9 +65,7 @@ class _MainScreenState extends State<MainScreen> {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) async {
-        if (Get.find<AppState>().selectedContent.value > 0) {
-          Get.find<AppState>().selectedContent.value--;
-        }
+        Get.find<AppState>().back();
       },
       child: Scaffold(
         body: Stack(
@@ -67,12 +81,17 @@ class _MainScreenState extends State<MainScreen> {
               left: 10,
               right: 10,
               child: Center(
-                child: Obx(
-                    () => KScore(Get.find<AppState>().score.value.toString())),
+                child: Obx(() => [
+                      Screen.draw,
+                      Screen.setting,
+                      Screen.leaderboard
+                    ].contains(Get.find<AppState>().currentScreen.value)
+                        ? Container()
+                        : KScore(Get.find<AppState>().score.value.toString())),
               ),
             ),
             Obx(
-              () => Get.find<AppState>().selectedContent.value == 3
+              () => Get.find<AppState>().currentScreen.value == Screen.draw
                   ? Container()
                   : Positioned(
                       top: 160,
@@ -89,15 +108,16 @@ class _MainScreenState extends State<MainScreen> {
               top: 80,
               left: 20,
               child: Center(
-                child: Obx(() => Get.find<AppState>().selectedContent.value != 0
-                    ? KIconButton(
-                        'assets/ui/ui_previous.svg',
-                        () {
-                          Get.find<AppState>().selectedContent.value--;
-                        },
-                        height: 32,
-                      )
-                    : Container()),
+                child: Obx(() =>
+                    Get.find<AppState>().currentScreen.value != Screen.main
+                        ? KIconButton(
+                            'assets/ui/ui_previous.svg',
+                            () {
+                              Get.find<AppState>().back();
+                            },
+                            height: 32,
+                          )
+                        : Container()),
               ),
             ),
             Positioned(
@@ -143,30 +163,38 @@ class _MainScreenState extends State<MainScreen> {
               () => AnimatedSwitcher(
                 duration: const Duration(
                     milliseconds: 300), // Duration of the animation
-                child: _pages[Get.find<AppState>().selectedContent.value],
+                child: getPageWidget(Get.find<AppState>().currentScreen.value),
                 transitionBuilder: (Widget child, Animation<double> animation) {
                   return FadeTransition(opacity: animation, child: child);
                 },
               ),
             ),
-            Get.find<AppState>().selectedContent.value > 0
-                ? Positioned(
-                    top: 70,
-                    left: 20,
-                    child: KIconButton(
-                      'assets/ui/ui_previous.svg',
-                      () {
-                        setState(() {
-                          Get.find<AppState>().selectedContent.value--;
-                        });
-                      },
-                      height: 48,
-                    ),
-                  )
-                : Container(),
           ],
         ),
+        bottomNavigationBar:
+            Container(width: double.infinity, height: 60, color: Colors.blue),
       ),
     );
+  }
+
+  Widget getPageWidget(String name) {
+    switch (name) {
+      case Screen.main:
+        return const MainContent();
+      case Screen.category:
+        return const CategoryContent();
+      case Screen.level:
+        return const LevelContent();
+      case Screen.setting:
+        return const SettingContent();
+      case Screen.leaderboard:
+        return const LeaderboardContent();
+      case Screen.draw:
+        return const DrawContent();
+      case Screen.lang:
+        return const LanguageContent();
+      default:
+        return const CircularProgressIndicator(); // Or handle the case where pageIndex is out of bounds
+    }
   }
 }

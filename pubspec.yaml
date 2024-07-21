@@ -103,11 +103,11 @@ flutter:
     - assets/fonts/
     - assets/
     - assets/images/launcher/
-    - assets/gif/
     - assets/bg/
     - assets/sounds/
     - assets/ui/
     - assets/animated/
+    - assets/alphabet/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -128,6 +128,12 @@ flutter:
     - family: Sr
       fonts:
         - asset: assets/fonts/siemreap.ttf
+    - family: Content-NoKor
+      fonts:
+        - asset: assets/fonts/content-nokor.ttf
+    - family: Content
+      fonts:
+        - asset: assets/fonts/content.ttf
     - family: Pali
       fonts:
         - asset: assets/fonts/pali.ttf

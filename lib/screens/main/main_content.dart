@@ -5,6 +5,7 @@ import '../../states/app_state.dart';
 import '../../widgets/k_icon_button.dart';
 import '../../widgets/k_menu_button.dart';
 import '../../widgets/k_progress.dart';
+import 'main_screen.dart';
 
 class MainContent extends StatelessWidget {
   const MainContent({super.key});
@@ -35,14 +36,7 @@ class MainContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     KMenuButton('start'.tr, () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute<void>(
-                      //     builder: (BuildContext context) =>
-                      //         const KSelectCategoryScreen(),
-                      //   ),
-                      // );
-                      Get.find<AppState>().selectedContent.value = 1;
+                      Get.find<AppState>().switchScreen(Screen.category);
                     }),
                   ],
                 ),
@@ -54,28 +48,28 @@ class MainContent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   KIconButton('assets/ui/ui_ranking.svg', () {
-                    Get.find<AppState>().lastSelectedIndex =
-                        Get.find<AppState>().selectedContent;
-                    Get.find<AppState>().selectedContent.value = 4;
+                    Get.find<AppState>().switchScreen(Screen.leaderboard);
                   }),
                   const SizedBox(
                     width: 12,
                   ),
-                  KIconButton('assets/ui/ui_setting.svg', () {}),
+                  KIconButton('assets/ui/ui_setting.svg', () {
+                    Get.find<AppState>().switchScreen(Screen.setting);
+                  }),
                 ],
               )
             ],
           ),
         ),
 
-        Positioned(
-          bottom: 10,
-          left: 10,
-          right: 10,
-          child: Center(
-            child: Obx(() => KProgress(Get.find<AppState>().progress.value)),
-          ),
-        ),
+        // Positioned(
+        //   bottom: 10,
+        //   left: 10,
+        //   right: 10,
+        //   child: Center(
+        //     child: Obx(() => KProgress(Get.find<AppState>().progress.value)),
+        //   ),
+        // ),
       ],
     );
   }

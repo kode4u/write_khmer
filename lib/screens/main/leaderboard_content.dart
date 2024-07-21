@@ -1,14 +1,11 @@
-import 'dart:ui';
-
 import 'package:dictionary/widgets/k_button.dart';
 import 'package:dictionary/widgets/k_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 
 import '../../states/app_state.dart';
+import '../../widgets/k_container.dart';
 
 class LeaderboardContent extends StatefulWidget {
   const LeaderboardContent({
@@ -35,7 +32,7 @@ class LeaderboardContentState extends State<LeaderboardContent> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Positioned.fill(
       child: Container(
         color: Colors.black.withOpacity(0.7),
@@ -43,27 +40,38 @@ class LeaderboardContentState extends State<LeaderboardContent> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              margin: EdgeInsets.only(top: 8, bottom: 8, right: 8, left: 8),
+              margin:
+                  const EdgeInsets.only(top: 8, bottom: 8, right: 8, left: 8),
               width: double.infinity,
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  SvgPicture.asset(
-                    'assets/ui/ui_leaderboard.svg',
-                    width: width,
+                  // SvgPicture.asset(
+                  //   'assets/ui/ui_sq_box.svg',
+                  //   width: width,
+                  // ),
+                  SizedBox(
+                    width: double.infinity,
+                    height: height - 240,
+                  ),
+                  Positioned(
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      child: KContainer()),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: -20,
+                    height: 64,
+                    child: KButton('', () {}),
                   ),
                   Positioned(
                     left: 0,
                     right: 0,
                     top: -12,
-                    child: KButton('', () {}),
-                    height: 64,
-                  ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    top: -6,
-                    child: KText('rank'.tr, size: 24),
+                    child: KText('setting'.tr, size: 24),
                   ),
                   // FittedBox(
                   //   child: widget.drawImage,
@@ -86,6 +94,16 @@ class LeaderboardContentState extends State<LeaderboardContent> {
                             RankItem(4, "PAOPAO", 100),
                             RankItem(5, "PAOPAO", 100),
                             RankItem(33, "PAOPAO", 100),
+                            RankItem(33, "PAOPAO", 100),
+                            RankItem(33, "PAOPAO", 100),
+                            RankItem(33, "PAOPAO", 100),
+                            RankItem(33, "PAOPAO", 100),
+                            RankItem(33, "PAOPAO", 100),
+                            RankItem(33, "PAOPAO", 100),
+                            RankItem(33, "PAOPAO", 100),
+                            RankItem(33, "PAOPAO", 100),
+                            RankItem(33, "PAOPAO", 100),
+                            RankItem(33, "PAOPAO", 100),
                           ],
                         ),
                       ))
@@ -95,8 +113,7 @@ class LeaderboardContentState extends State<LeaderboardContent> {
             KButton(
               'close'.tr,
               () {
-                Get.find<AppState>().selectedContent =
-                    Get.find<AppState>().lastSelectedIndex;
+                Get.find<AppState>().back();
               },
               height: 40,
               size: 20,
@@ -106,12 +123,79 @@ class LeaderboardContentState extends State<LeaderboardContent> {
         ),
       ),
     );
+    // double width = MediaQuery.of(context).size.width;
+    // return Positioned.fill(
+    //   child: Container(
+    //     color: Colors.black.withOpacity(0.7),
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: [
+    //         // Container(
+    //         //   margin: EdgeInsets.only(top: 8, bottom: 8, right: 8, left: 8),
+    //         //   width: double.infinity,
+    //         //   child: Stack(
+    //         //     clipBehavior: Clip.none,
+    //         //     children: [
+    //         //       // Positioned(left: 8, child: Text("HI")),
+    //         //       Positioned(
+    //         //         left: 0,
+    //         //         right: 0,
+    //         //         top: -12,
+    //         //         child: KButton('', () {}),
+    //         //         height: 64,
+    //         //       ),
+    //         //       Positioned(
+    //         //         left: 0,
+    //         //         right: 0,
+    //         //         top: -6,
+    //         //         child: KText('rank'.tr, size: 24),
+    //         //       ),
+    //         //       // FittedBox(
+    //         //       //   child: widget.drawImage,
+    //         //       //   fit: BoxFit.contain,
+    //         //       // )
+
+    //         //       Positioned(
+    //         //           top: 25,
+    //         //           left: 0,
+    //         //           bottom: 0,
+    //         //           right: 0,
+    //         //           child: SingleChildScrollView(
+    //         //             scrollDirection: Axis.vertical,
+    //         //             child: Column(
+    //         //               mainAxisAlignment: MainAxisAlignment.start,
+    //         //               children: [
+    //         //                 RankItem(1, "MUTITA", 120),
+    //         //                 RankItem(2, "TIMA", 110),
+    //         //                 RankItem(3, "PAOPAO", 100),
+    //         //                 RankItem(4, "PAOPAO", 100),
+    //         //                 RankItem(5, "PAOPAO", 100),
+    //         //                 RankItem(33, "PAOPAO", 100),
+    //         //               ],
+    //         //             ),
+    //         //           ))
+    //         //     ],
+    //         //   ),
+    //         // ),
+    //         KButton(
+    //           'close'.tr,
+    //           () {
+    //             Get.find<AppState>().back();
+    //           },
+    //           height: 40,
+    //           size: 20,
+    //           marginTop: 4,
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 
   Widget RankItem(int rank, String name, int score) {
     return Container(
-      margin: EdgeInsets.only(left: 16, right: 8, top: 8),
-      padding: EdgeInsets.all(0),
+      margin: const EdgeInsets.only(left: 16, right: 8, top: 8),
+      padding: const EdgeInsets.all(0),
       child: Row(
         children: [
           rank < 4
@@ -131,7 +215,7 @@ class LeaderboardContentState extends State<LeaderboardContent> {
                       top: 7,
                       child: Text(
                         '$rank',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'ChangaOne',
                           color: Colors.white,
                           fontSize: 24,
@@ -146,7 +230,7 @@ class LeaderboardContentState extends State<LeaderboardContent> {
                   child: Center(
                     child: Text(
                       '$rank',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'ChangaOne',
                         color: Colors.white,
                         fontSize: 24,
@@ -154,15 +238,15 @@ class LeaderboardContentState extends State<LeaderboardContent> {
                     ),
                   ),
                 ),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
           Text(
             name,
-            style: TextStyle(
+            style: const TextStyle(
                 fontFamily: 'ChangaOne', color: Colors.white, fontSize: 24),
           ),
-          Spacer(),
+          const Spacer(),
           Row(
             children: [
               SvgPicture.asset(
@@ -179,14 +263,14 @@ class LeaderboardContentState extends State<LeaderboardContent> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             width: 8,
           ),
           SizedBox(
             width: 64,
             child: Text(
               '$score',
-              style: TextStyle(
+              style: const TextStyle(
                   fontFamily: 'ChangaOne', color: Colors.white, fontSize: 24),
             ),
           ),

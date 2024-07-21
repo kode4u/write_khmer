@@ -7,20 +7,23 @@ class KGradientOutlineText extends StatelessWidget {
   final double outlineWidth;
   final Color outlineColor;
   final Color shadowColor;
+  bool enFont = false;
 
-  const KGradientOutlineText(
-    this.text, {super.key, 
+  KGradientOutlineText(
+    this.text, {
+    super.key,
     this.fontSize = 40.0,
     this.gradientColors = const [Colors.yellow, Colors.amber, Colors.orange],
     this.outlineWidth = 3.0,
     this.outlineColor = Colors.white,
     this.shadowColor = Colors.black,
+    this.enFont = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final textStyle = TextStyle(
-      fontFamily: 'Muol', // Use your desired font
+      fontFamily: enFont ? 'ChangaOne' : 'Muol', // Use your desired font
       fontSize: fontSize,
       color: Colors.white, // Color is ignored by ShaderMask
     );
@@ -63,7 +66,8 @@ class KGradientOutlineText extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                fontFamily: 'Muol', // Use your desired font
+                fontFamily:
+                    enFont ? 'ChangaOne' : 'Muol', // Use your desired font
                 fontSize: fontSize,
                 foreground: Paint()
                   ..style = PaintingStyle.stroke
@@ -81,7 +85,8 @@ class KGradientOutlineText extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                fontFamily: 'Muol', // Use your desired font
+                fontFamily:
+                    enFont ? 'ChangaOne' : 'Muol', // Use your desired font
                 fontSize: fontSize,
                 foreground: Paint()
                   ..style = PaintingStyle.stroke
@@ -114,7 +119,8 @@ class KGradientOutlineText extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                fontFamily: 'Muol', // Use your desired font
+                fontFamily:
+                    enFont ? 'ChangaOne' : 'Muol', // Use your desired font
                 fontSize: fontSize,
                 color: Colors.white, // This color will be ignored by ShaderMask
               ),
