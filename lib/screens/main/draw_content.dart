@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dictionary/states/app_state.dart';
-import 'package:dictionary/widgets/k_progress.dart';
 import 'package:dictionary/widgets/k_try_again.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -79,9 +78,10 @@ class DrawContentState extends State<DrawContent> {
                   margin: const EdgeInsets.only(left: 30, right: 30),
                   width: 160,
                   height: 160,
-                  child: const Center(
+                  child: Center(
                       child: AnimatedSvg(
-                    filename: 'assets/alphabet/ក.svg',
+                    filename:
+                        'assets/alphabet/${Get.find<AppState>().data[Get.find<AppState>().selectedIndex.value]['c'].toString()}.svg',
                   )),
                 ),
               ],
@@ -120,10 +120,18 @@ class DrawContentState extends State<DrawContent> {
                         key: _textKey,
                         child: Obx(
                           () => CustomPaint(
-                            painter: TextPainterWidget(Get.find<AppState>()
-                                .data[Get.find<AppState>().selectedIndex.value]
-                                    ['c']
-                                .toString()),
+                            painter: TextPainterWidget(
+                                Get.find<AppState>()
+                                    .data[Get.find<AppState>()
+                                        .selectedIndex
+                                        .value]['c']
+                                    .toString(),
+                                Get.find<AppState>()
+                                        .data[Get.find<AppState>()
+                                            .selectedIndex
+                                            .value]['font']
+                                        ?.toString() ??
+                                    'Sr'),
                             size: Size(width, width),
                           ),
                         ),

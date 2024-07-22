@@ -32,7 +32,7 @@ class Util {
       int length = 1000,
       int delay = 0}) async {
     var data = """
-<svg id="z12736" class="acjk" version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="z12736" class="acjk" version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <style>
 <![CDATA[
 @keyframes zk {
@@ -83,7 +83,7 @@ svg.acjk path[id] {fill:#ccc;}
       int length = 1000,
       int delay = 0}) async {
     var data = """
-<svg id="z20023" class="acjk" version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="z20023" class="acjk" version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <style>
 <![CDATA[
 @keyframes zk {
@@ -139,7 +139,7 @@ svg.acjk path[id] {fill:#ccc;}
       int length = 1000,
       int delay = 0}) async {
     var data = """
-<svg id="z17553" class="acjk" version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="z17553" class="acjk" version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <style>
 <![CDATA[
 @keyframes zk {
@@ -199,7 +199,7 @@ svg.acjk path[id] {fill:#ccc;}
       int length = 1000,
       int delay = 0}) async {
     var data = """
-<svg id="z20013" class="acjk" version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="z20013" class="acjk" version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <style>
 <![CDATA[
 @keyframes zk {

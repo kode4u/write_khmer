@@ -43,6 +43,7 @@ class _AnimatedSvgState extends State<AnimatedSvg> {
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.disabled)
       ..setBackgroundColor(const Color(0x00000000))
+      ..enableZoom(false)
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {

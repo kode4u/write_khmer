@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:svg_generate/svg_util.dart';
 
 void main() async {
-  // processOneStroke();
+  processOneStroke();
   processTwoStroke();
-  // processThreeStroke();
-  // processFourStroke();
+  processThreeStroke();
+  processFourStroke();
 }
 
 void processFourStroke() async {
@@ -116,7 +116,6 @@ Future<void> processFileTwoStroke(
   Util u = Util();
   String text1 = await u.getPath(dir, filename, 'text1');
   String path1 = await u.getPath(dir, filename, 'path1');
-  print('path$path1');
   String path2 = await u.getPath(dir, filename, 'path2');
   await u.twoStroke(
       text: text1,

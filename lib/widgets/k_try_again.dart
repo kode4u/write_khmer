@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:dictionary/widgets/k_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
@@ -29,14 +30,19 @@ class KTryAgainState extends State<KTryAgain> {
   double wSmallStar = 48;
   double wBigStar = 64;
 
+  AudioPlayer? audioPlayer;
+
   @override
   void initState() {
     super.initState();
+    audioPlayer = AudioPlayer();
+    audioPlayer?.play(AssetSource('assets/sounds/gameover.mp3'));
   }
 
   @override
   void dispose() {
     super.dispose();
+    audioPlayer?.dispose();
   }
 
   @override
