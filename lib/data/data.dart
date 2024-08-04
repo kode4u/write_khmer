@@ -1,5 +1,9 @@
-class DataAlpha {
-  var d = [
+import 'dart:convert';
+
+import 'package:get_storage/get_storage.dart';
+
+Map<String, dynamic> data = {
+  'data_alpha': [
     {
       'c': 'ក',
       'star': 0,
@@ -198,11 +202,8 @@ class DataAlpha {
       'p': 'alphas',
       's': 'sounds',
     }
-  ];
-}
-
-class DataAlphaEn {
-  var d = [
+  ],
+  'data_alpha_en': [
     {
       'c': 'A',
       'star': 0,
@@ -359,11 +360,8 @@ class DataAlphaEn {
       'p': 'alphas',
       's': 'sounds',
     },
-  ];
-}
-
-class DataAlphaEnLower {
-  var d = [
+  ],
+  'data_alpha_lower_en': [
     {
       'c': 'a',
       'star': 0,
@@ -520,11 +518,14 @@ class DataAlphaEnLower {
       'p': 'alphas',
       's': 'sounds',
     },
-  ];
-}
-
-class DataNumber {
-  var d = [
+  ],
+  'data_number': [
+    {
+      'c': '០',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
     {
       'c': '1',
       'star': 0,
@@ -579,11 +580,14 @@ class DataNumber {
       'p': 'alphas',
       's': 'sounds',
     },
-  ];
-}
-
-class DataKhmerNumber {
-  var d = [
+  ],
+  'data_khmer_number': [
+    {
+      'c': '០',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
     {
       'c': '១',
       'star': 0,
@@ -638,11 +642,8 @@ class DataKhmerNumber {
       'p': 'alphas',
       's': 'sounds',
     },
-  ];
-}
-
-class DataAlphaLeg {
-  var d = [
+  ],
+  'data_alpha_leg': [
     {
       'c': '្ក',
       'font': 'Thin-No-Dot',
@@ -678,11 +679,176 @@ class DataAlphaLeg {
       'p': 'alphas',
       's': 'sounds',
     },
-  ];
-}
-
-class DataVowel {
-  var d = [
+    {
+      'c': '្ច',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ឆ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ជ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ឈ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ញ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ដ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ឋ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ឌ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ឍ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ណ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ត',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ថ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ទ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ធ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ន',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ប',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ផ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ព',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ភ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ម',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្យ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្រ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ល',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្វ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ស',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ហ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្ឡ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': '្អ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    }
+  ],
+  'data_vowel': [
     {
       'c': 'ា',
       'font': 'Thin-No-Dot',
@@ -843,41 +1009,86 @@ class DataVowel {
       'star': 0,
       'p': 'alphas',
       's': 'sounds',
-    },
-  ];
-}
-
-class DataIndependenceVowel {
-  var d = [
+    }
+  ],
+  'data_independence_vowel': [
     {
-      'c': 'ក',
+      'c': 'ឥ',
       'star': 0,
       'p': 'alphas',
       's': 'sounds',
     },
     {
-      'c': 'ខ',
+      'c': 'ឦ',
       'star': 0,
       'p': 'alphas',
       's': 'sounds',
     },
     {
-      'c': 'គ',
+      'c': 'ឧ',
       'star': 0,
       'p': 'alphas',
       's': 'sounds',
     },
     {
-      'c': 'ឃ',
+      'c': 'ឩ',
       'star': 0,
       'p': 'alphas',
       's': 'sounds',
     },
     {
-      'c': 'ង',
+      'c': 'ឪ',
       'star': 0,
       'p': 'alphas',
       's': 'sounds',
     },
-  ];
-}
+    {
+      'c': 'ឫ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': 'ឬ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': 'ឭ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': 'ឮ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': 'ឯ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': 'ឰ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': 'ឱ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    },
+    {
+      'c': 'ឳ',
+      'star': 0,
+      'p': 'alphas',
+      's': 'sounds',
+    }
+  ]
+};
