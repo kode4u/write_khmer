@@ -1,4 +1,3 @@
-import 'package:dictionary/data/data.dart';
 import 'package:dictionary/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,10 +11,11 @@ class CategoryContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppState app = Get.find<AppState>();
     return Stack(
       children: [
         Positioned.fill(
-          top: 10,
+          top: 80,
           left: 10,
           right: 10,
           bottom: 10,
@@ -25,37 +25,36 @@ class CategoryContent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   KButton("alphabet".tr, () {
-                    Get.find<AppState>().data.value =
-                        KUtil.isEn() ? DataAlphaEn().d : DataAlpha().d;
-                    Get.find<AppState>().switchScreen(Screen.level);
+                    app.currentKey.value =
+                        KUtil.isEn() ? 'data_alpha_en' : 'data_alpha';
+                    app.switchScreen(Screen.level);
                   }),
                   KUtil.isEn()
                       ? Container()
                       : KButton("khmer_number".tr, () {
-                          Get.find<AppState>().data.value = DataKhmerNumber().d;
-                          Get.find<AppState>().switchScreen(Screen.level);
+                          app.currentKey.value = 'data_khmer_number';
+                          app.switchScreen(Screen.level);
                         }),
                   KButton("roman_number".tr, () {
-                    Get.find<AppState>().data.value = DataNumber().d;
-                    Get.find<AppState>().switchScreen(Screen.level);
+                    app.currentKey.value = 'data_number';
+                    app.switchScreen(Screen.level);
                   }),
                   KButton("alphabet_leg".tr, () {
-                    Get.find<AppState>().data.value =
-                        KUtil.isEn() ? DataAlphaEnLower().d : DataAlphaLeg().d;
-                    Get.find<AppState>().switchScreen(Screen.level);
+                    app.currentKey.value =
+                        KUtil.isEn() ? 'data_alpha_lower_en' : 'data_alpha_leg';
+                    app.switchScreen(Screen.level);
                   }),
                   KUtil.isEn()
                       ? Container()
                       : KButton("vowel".tr, () {
-                          Get.find<AppState>().data.value = DataVowel().d;
-                          Get.find<AppState>().switchScreen(Screen.level);
+                          app.currentKey.value = 'data_vowel';
+                          app.switchScreen(Screen.level);
                         }),
                   KUtil.isEn()
                       ? Container()
                       : KButton("independence_vowel".tr, () {
-                          Get.find<AppState>().data.value =
-                              DataIndependenceVowel().d;
-                          Get.find<AppState>().switchScreen(Screen.level);
+                          app.currentKey.value = 'data_independence_vowel';
+                          app.switchScreen(Screen.level);
                         }),
                 ],
               )),

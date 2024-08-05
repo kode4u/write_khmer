@@ -63,16 +63,30 @@ class SettingContentState extends State<SettingContent> {
                   Positioned(
                     left: 0,
                     right: 0,
-                    top: -12,
-                    height: 64,
-                    child: KButton('', () {}),
+                    top: -18,
+                    child: KButton(
+                      'setting'.tr,
+                      () {
+                        Get.find<AppState>().back();
+                      },
+                      height: 40,
+                      size: 20,
+                      marginTop: 4,
+                    ),
                   ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    top: -6,
-                    child: KText('setting'.tr, size: 24),
-                  ),
+                  // Positioned(
+                  //   left: 0,
+                  //   right: 0,
+                  //   top: -12,
+                  //   height: 64,
+                  //   child: KButton('', () {}),
+                  // ),
+                  // Positioned(
+                  //   left: 0,
+                  //   right: 0,
+                  //   top: -6,
+                  //   child: KText('setting'.tr, size: 24),
+                  // ),
                   // FittedBox(
                   //   child: widget.drawImage,
                   //   fit: BoxFit.contain,
@@ -88,33 +102,28 @@ class SettingContentState extends State<SettingContent> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            rankItem(33, "${'language'.tr}: ${lang.tr}", false,
-                                () {
-                              if (KUtil.isEn()) {
-                                KUtil.changeToKhmer();
-                                setState(() {
-                                  lang = 'khmer'.tr;
-                                });
-                              } else {
-                                KUtil.changeToEnglish();
-                                setState(() {
-                                  lang = 'english'.tr;
-                                });
-                              }
-                            }),
-                            rankItem(33, "music".tr, true, () {
+                            itemLang(
+                              "${'language'.tr}: ${lang.tr}",
+                            ),
+                            itemMusic("music".tr, () {
                               GetStorage g = GetStorage();
                               Get.find<AppState>().enableMusic =
                                   !Get.find<AppState>().enableMusic;
                               g.write(
                                   'bg_music', Get.find<AppState>().enableMusic);
+                              Get.find<AppState>().enableMusic
+                                  ? Get.find<AppState>().playBGMusic()
+                                  : Get.find<AppState>().stopBGMusic();
                             }),
-                            rankItem(33, "sound".tr, true, () {
+                            itemSound("sound".tr, () {
                               GetStorage g = GetStorage();
                               Get.find<AppState>().enableSound =
                                   !Get.find<AppState>().enableSound;
                               g.write(
                                   'sound', Get.find<AppState>().enableSound);
+                              Get.find<AppState>().enableSound
+                                  ? Get.find<AppState>().playTap()
+                                  : Get.find<AppState>().stopTap();
                             }),
                           ],
                         ),
@@ -137,7 +146,42 @@ class SettingContentState extends State<SettingContent> {
     );
   }
 
-  Widget rankItem(int rank, String name, bool hasIcon, var f) {
+  Widget itemLang(String name) {
+    return GestureDetector(
+      onTap: () {
+        if (KUtil.isEn()) {
+          KUtil.changeToKhmer();
+          setState(() {
+            lang = 'khmer'.tr;
+          });
+        } else {
+          KUtil.changeToEnglish();
+          setState(() {
+            lang = 'english'.tr;
+          });
+        }
+      },
+      child: Container(
+        margin: const EdgeInsets.only(left: 16, right: 8, top: 8),
+        padding: const EdgeInsets.all(0),
+        child: Row(
+          children: [
+            const SizedBox(width: 16),
+            Text(
+              name,
+              style: TextStyle(
+                  fontFamily: KUtil.isKh() ? 'Sr' : 'ChangaOne',
+                  color: Colors.white,
+                  fontSize: 24),
+            ),
+            const Spacer(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget itemMusic(String name, f) {
     return GestureDetector(
       onTap: f,
       child: Container(
@@ -154,21 +198,43 @@ class SettingContentState extends State<SettingContent> {
                   fontSize: 24),
             ),
             const Spacer(),
-            hasIcon
-                ? const SizedBox(
-                    width: 8,
-                  )
-                : Container(),
-            hasIcon
-                ? SizedBox(
-                    width: 64,
-                    child: KIconCheckButton(
-                      'assets/ui/ui_tick.svg',
-                      f,
-                      height: 32,
-                    ),
-                  )
-                : Container(),
+            SizedBox(
+              width: 64,
+              child: KIconCheckButton(
+                'assets/ui/ui_tick.svg',
+                f,
+                height: 32,
+                isCheck: Get.find<AppState>().enableMusic,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget itemSound(String name, f) {
+    return GestureDetector(
+      onTap: f,
+      child: Container(
+        margin: const EdgeInsets.only(left: 16, right: 8, top: 8),
+        padding: const EdgeInsets.all(0),
+        child: Row(
+          children: [
+            const SizedBox(width: 16),
+            Text(
+              name,
+              style: TextStyle(
+                  fontFamily: KUtil.isKh() ? 'Sr' : 'ChangaOne',
+                  color: Colors.white,
+                  fontSize: 24),
+            ),
+            const Spacer(),
+            SizedBox(
+              width: 64,
+              child: KIconCheckButton('assets/ui/ui_tick.svg', f,
+                  height: 32, isCheck: Get.find<AppState>().enableSound),
+            ),
           ],
         ),
       ),

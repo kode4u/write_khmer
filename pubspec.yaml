@@ -125,9 +125,7 @@ flutter:
     - family: Moul
       fonts:
         - asset: assets/fonts/muollight.ttf
-    - family: Thin-No-Dot
-      fonts:
-        - asset: assets/fonts/Thin-No-Dot.ttf
+    
     - family: Content
       fonts:
         - asset: assets/fonts/content.ttf

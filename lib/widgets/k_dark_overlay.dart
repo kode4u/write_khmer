@@ -4,7 +4,10 @@ import 'package:dictionary/widgets/k_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+
+import 'k_button_2.dart';
 
 class DarkOverlay extends StatefulWidget {
   final bool showOverlay;
@@ -74,7 +77,7 @@ class DarkOverlayState extends State<DarkOverlay> {
                   color: Colors.white, fontFamily: "Sr", fontSize: 28),
             ),
             Container(
-              margin: EdgeInsets.only(top: 8, bottom: 8),
+              margin: const EdgeInsets.only(top: 8, bottom: 8),
               width: 200,
               height: 200,
               child: Stack(
@@ -101,8 +104,12 @@ class DarkOverlayState extends State<DarkOverlay> {
                             ? [ssE, sbE, ssD]
                             : [ssE, sbE, ssE]))),
             const SizedBox(height: 20),
-            KButton(
-              "Close",
+            KButton2(
+              "close".tr,
+              marginTop: 10,
+              width: 96,
+              height: 48,
+              size: 20,
               widget.onClose,
             ),
           ],

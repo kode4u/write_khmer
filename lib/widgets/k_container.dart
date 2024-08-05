@@ -5,7 +5,7 @@ class KContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    double borderWidth = 4;
+    double borderWidth = 3;
     return Container(
       width: width,
       height: height,
@@ -16,7 +16,7 @@ class KContainer extends StatelessWidget {
               width: width,
               height: height,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
                   colors: [Color(0xFFFDE049), Color(0xFFFDE049)],
@@ -24,12 +24,12 @@ class KContainer extends StatelessWidget {
                 borderRadius:
                     BorderRadius.circular(16), // Adjust as per your needs
                 boxShadow: [
-                  BoxShadow(
+                  const BoxShadow(
                     color: Color(0xFFFA6B49),
                     spreadRadius: 0,
                     blurRadius: 0,
                     offset:
-                        Offset(0, 5), // Changes the shadow position rightwards
+                        Offset(0, 0), // Changes the shadow position rightwards
                   ),
                 ],
               ),
@@ -41,13 +41,13 @@ class KContainer extends StatelessWidget {
               width: width - borderWidth * 2,
               height: height - borderWidth * 2,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
                   colors: [Color(0xFFFA6B49), Color(0xFFFEB749)],
                 ),
                 borderRadius:
-                    BorderRadius.circular(16), // Adjust as per your needs
+                    BorderRadius.circular(14), // Adjust as per your needs
                 boxShadow: [
                   // BoxShadow(
                   //   color: Color(0xFFFA6B49),

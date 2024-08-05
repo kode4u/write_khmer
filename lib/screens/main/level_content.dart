@@ -16,21 +16,16 @@ class LevelContent extends StatefulWidget {
 class LevelContentState extends State<LevelContent>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  // final List<int> _delays = [];
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 400),
       vsync: this,
     );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final itemCount = Get.find<AppState>().data.length;
-      // setState(() {
-      //   _delays.addAll(List.generate(itemCount, (index) => index * 100));
-      // });
       _controller.forward();
     });
   }
@@ -60,7 +55,8 @@ class LevelContentState extends State<LevelContent>
                 crossAxisSpacing: 4.0, // Horizontal spacing between items
                 mainAxisSpacing: 24.0, // Vertical spacing between items
               ),
-              itemCount: app.data.length, // Total number of items in the grid
+              itemCount: app.allData[app.currentKey.value]
+                  .length, // Total number of items in the grid
               itemBuilder: (context, index) {
                 double cardWidth = (width - 24) / 3;
                 double wSmallStar = (cardWidth - 64) / 3;
@@ -89,7 +85,7 @@ class LevelContentState extends State<LevelContent>
                     return Opacity(
                       opacity: animationValue,
                       child: Transform.translate(
-                        offset: Offset(0, 100 * (1 - animationValue)),
+                        offset: Offset(0, 20 * (1 - animationValue)),
                         child: GestureDetector(
                           onTap: () {
                             Get.find<AppState>().selectedIndex.value = index;
@@ -107,7 +103,8 @@ class LevelContentState extends State<LevelContent>
                               Positioned(
                                 top: 22,
                                 child: Text(
-                                  app.data[index]['c'].toString(),
+                                  app.allData[app.currentKey.value][index]['c']
+                                      .toString(),
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Sr',
@@ -122,11 +119,17 @@ class LevelContentState extends State<LevelContent>
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: (app.data[index]['star'] == 0
+                                  children: (app.allData[app.currentKey.value]
+                                              [index]['star'] ==
+                                          0
                                       ? [ssD, sbD, ssD]
-                                      : (app.data[index]['star'] == 1
+                                      : (app.allData[app.currentKey.value]
+                                                  [index]['star'] ==
+                                              1
                                           ? [ssE, sbD, ssD]
-                                          : (app.data[index]['star'] == 2
+                                          : (app.allData[app.currentKey.value]
+                                                      [index]['star'] ==
+                                                  2
                                               ? [ssE, sbE, ssD]
                                               : [ssE, sbE, ssE]))),
                                 ),

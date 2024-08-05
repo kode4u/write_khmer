@@ -1,6 +1,7 @@
+import 'dart:convert';
+
 import 'package:audioplayers/audioplayers.dart';
-import 'package:dictionary/screens/main/main_content.dart';
-import 'package:flutter/material.dart';
+import 'package:dictionary/data/data.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:kode4u/utils/k_ads.dart';
@@ -16,19 +17,14 @@ class AppState extends GetxController {
   final AudioPlayer bgPlayer = AudioPlayer();
   final AudioPlayer tapPlayer = AudioPlayer();
   var currentScreen = Screen.main.obs;
-  var data = [
-    {
-      'c': 'ក',
-      'star': 0,
-      'p': 'alphas',
-      's': 'sounds',
-    }
-  ].obs;
-
+  var allData = data.obs;
+  var currentKey = ''.obs;
   var selectedIndex = 0.obs;
 
   bool enableMusic = true;
   bool enableSound = true;
+
+  var user = {}.obs;
 
   void switchScreen(String name) {
     if (stack.contains(name)) {
@@ -59,9 +55,11 @@ class AppState extends GetxController {
     enableSound = g.read('sound') ?? true;
   }
 
-  void playBGMusic() {
+  void playBGMusic() async {
     if (enableMusic) {
+      bgPlayer.stop();
       bgPlayer.play(AssetSource('sounds/bg_music.mp3'), volume: volume);
+      await bgPlayer.setReleaseMode(ReleaseMode.loop);
     }
   }
 
@@ -71,11 +69,44 @@ class AppState extends GetxController {
 
   void playTap() {
     if (enableSound) {
-      bgPlayer.play(AssetSource('sounds/tap.mp3'), volume: volume);
+      tapPlayer.play(AssetSource('sounds/tap.mp3'), volume: volume);
     }
   }
 
   void stopTap() {
-    bgPlayer.stop();
+    tapPlayer.stop();
+  }
+
+  void dispose() {
+    tapPlayer.dispose();
+    bgPlayer.dispose();
+  }
+
+  int calculateTotalStars() {
+    int totalStars = 0;
+
+    // Iterate over all keys in the map
+    for (String key in allData.keys) {
+      List<dynamic> dataList = allData[key];
+      for (var item in dataList) {
+        totalStars += int.parse('${item['star']}');
+      }
+    }
+    return totalStars;
+  }
+
+  void saveData() {
+    GetStorage g = GetStorage();
+    g.write('data', jsonEncode(allData));
+  }
+
+  void loadData() {
+    GetStorage g = GetStorage();
+    String? jsonString = g.read('data');
+    if (jsonString != null) {
+      allData.value = jsonDecode(jsonString);
+    }
+    //calcute score
+    score.value = calculateTotalStars();
   }
 }

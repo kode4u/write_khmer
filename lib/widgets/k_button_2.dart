@@ -1,22 +1,30 @@
 import 'package:dictionary/states/app_state.dart';
+import 'package:dictionary/widgets/k_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:dictionary/widgets/k_text.dart';
 import 'package:get/get.dart';
 
-class KIconCheckButton extends StatefulWidget {
-  final String icon;
+class KButton2 extends StatefulWidget {
+  final String text;
   final VoidCallback onPressed;
-  final double height;
-  bool isCheck = false;
+  double width;
+  double height;
+  double marginTop;
+  double size;
 
-  KIconCheckButton(this.icon, this.onPressed,
-      {this.height = 64, super.key, this.isCheck = false});
+  KButton2(this.text, this.onPressed,
+      {this.width = 32,
+      this.height = 64,
+      this.marginTop = 10,
+      super.key,
+      this.size = 14});
 
   @override
-  KIconCheckButtonState createState() => KIconCheckButtonState();
+  KButton2State createState() => KButton2State();
 }
 
-class KIconCheckButtonState extends State<KIconCheckButton>
+class KButton2State extends State<KButton2>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
@@ -71,9 +79,6 @@ class KIconCheckButtonState extends State<KIconCheckButton>
         onTap: () async {
           Get.find<AppState>().playTap();
           if (!_isPressed) {
-            setState(() {
-              widget.isCheck = !widget.isCheck;
-            });
             await _controller.forward().orCancel;
             await _controller.reverse();
             widget.onPressed();
@@ -85,11 +90,22 @@ class KIconCheckButtonState extends State<KIconCheckButton>
           builder: (context, child) {
             return Transform.scale(
               scale: _scaleAnimation.value,
-              child: SvgPicture.asset(
-                widget.isCheck
-                    ? 'assets/ui/ui_tick.svg'
-                    : 'assets/ui/ui-untick.svg',
-                height: widget.height,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    height: widget.height,
+                    width: widget.width,
+                    child: KContainer(),
+                  ),
+                  Positioned(
+                    top: widget.marginTop,
+                    child: KText(
+                      widget.text,
+                      size: widget.size,
+                    ),
+                  ),
+                ],
               ),
             );
           },

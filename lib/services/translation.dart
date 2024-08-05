@@ -17,6 +17,11 @@ Map<String, Map<String, String>> get translation => {
         'vowel': 'Vowel',
         'independence_vowel': 'Independence Vowel',
         'try_again': 'Try Again',
+        'leaderboard': 'Leaderboard',
+        'input_name': 'Please input name',
+        'username': 'Username',
+        'welcome': 'Welcome',
+        'ok': 'OK'
       },
       'km_KH': {
         'app_name': 'រៀនសរសេរខ្មែរ',
@@ -28,7 +33,7 @@ Map<String, Map<String, String>> get translation => {
         'language': 'ភាសា',
         'khmer': 'ខ្មែរ',
         'english': 'អង់គ្លេស',
-        'music': 'តន្រី',
+        'music': 'តន្ត្រី',
         'sound': 'សម្លេង',
         'alphabet': 'ព្យញ្ជនៈ',
         'khmer_number': 'លេខខ្មែរ',
@@ -37,5 +42,10 @@ Map<String, Map<String, String>> get translation => {
         'vowel': 'ស្រៈ',
         'independence_vowel': 'ស្រៈពេញតួ',
         'try_again': 'សូមព្យាយាមម្ដងទៀត',
+        'leaderboard': 'ចំណាត់ថ្នាក់',
+        'input_name': 'សូមបញ្ចូលឈ្មោះ',
+        'welcome': 'ស្វាគមន៍',
+        'username': 'ឈ្មោះ',
+        'ok': 'យល់ព្រម'
       },
     };

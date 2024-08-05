@@ -48,7 +48,8 @@ class KGradientOutlineText extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                fontFamily: 'Muol', // Use your desired font
+                fontFamily:
+                    enFont ? 'ChangaOne' : 'Muol', // Use your desired font
                 fontSize: fontSize,
                 foreground: Paint()
                   ..style = PaintingStyle.stroke

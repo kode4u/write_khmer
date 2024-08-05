@@ -1,3 +1,4 @@
+import 'package:dictionary/widgets/k_user_input.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,8 +8,15 @@ import '../../widgets/k_menu_button.dart';
 import '../../widgets/k_progress.dart';
 import 'main_screen.dart';
 
-class MainContent extends StatelessWidget {
+class MainContent extends StatefulWidget {
   const MainContent({super.key});
+
+  @override
+  State<MainContent> createState() => _MainContentState();
+}
+
+class _MainContentState extends State<MainContent> {
+  bool showUserInput = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +44,15 @@ class MainContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     KMenuButton('start'.tr, () {
-                      Get.find<AppState>().switchScreen(Screen.category);
+                      //if user havent input username show dialog
+                      if (Get.find<AppState>().user.isEmpty) {
+                        setState(() {
+                          showUserInput = true;
+                        });
+                      } else {
+                        //else show new screen
+                        Get.find<AppState>().switchScreen(Screen.category);
+                      }
                     }),
                   ],
                 ),
@@ -57,19 +73,16 @@ class MainContent extends StatelessWidget {
                     Get.find<AppState>().switchScreen(Screen.setting);
                   }),
                 ],
-              )
+              ),
             ],
           ),
         ),
-
-        // Positioned(
-        //   bottom: 10,
-        //   left: 10,
-        //   right: 10,
-        //   child: Center(
-        //     child: Obx(() => KProgress(Get.find<AppState>().progress.value)),
-        //   ),
-        // ),
+        if (showUserInput)
+          KUserInput(onClose: () {
+            setState(() {
+              showUserInput = false;
+            });
+          }),
       ],
     );
   }

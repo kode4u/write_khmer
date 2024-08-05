@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:kode4u/configs/k_config.dart';
+import 'package:kode4u/utils/k_utils.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../states/app_state.dart';
@@ -81,25 +82,41 @@ class _MainScreenState extends State<MainScreen> {
               left: 10,
               right: 10,
               child: Center(
-                child: Obx(() => [
-                      Screen.draw,
-                      Screen.setting,
-                      Screen.leaderboard
-                    ].contains(Get.find<AppState>().currentScreen.value)
-                        ? Container()
-                        : KScore(Get.find<AppState>().score.value.toString())),
+                child: Obx(() => [Screen.setting, Screen.leaderboard]
+                        .contains(Get.find<AppState>().currentScreen.value)
+                    ? Container()
+                    : Obx(() => GestureDetector(
+                        onTap: () {
+                          Get.find<AppState>().switchScreen(Screen.leaderboard);
+                        },
+                        child: KScore(
+                            Get.find<AppState>().score.value.toString())))),
+              ),
+            ),
+            Positioned(
+              top: 180,
+              left: 10,
+              right: 10,
+              child: Center(
+                child: Obx(() => KGradientOutlineText(
+                      Get.find<AppState>().user['username'] == null
+                          ? ''
+                          : "${'welcome'.tr} ${Get.find<AppState>().user['username']}",
+                      fontSize: 24,
+                    )),
               ),
             ),
             Obx(
               () => Get.find<AppState>().currentScreen.value == Screen.draw
                   ? Container()
                   : Positioned(
-                      top: 160,
+                      top: 120,
                       left: 10,
                       right: 10,
                       child: Center(
                         child: KGradientOutlineText(
                           'app_name'.tr,
+                          enFont: KUtil.isEn(),
                         ),
                       ),
                     ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../services/api.dart';
 import '../../states/app_state.dart';
 import '../../widgets/k_container.dart';
 
@@ -20,9 +21,17 @@ class LeaderboardContentState extends State<LeaderboardContent> {
   double wSmallStar = 48;
   double wBigStar = 64;
 
+  List data = [];
+
   @override
   void initState() {
     super.initState();
+    loadData();
+  }
+
+  loadData() async {
+    List item = await queryLeaderboard();
+    setState(() => data = item);
   }
 
   @override
@@ -33,7 +42,11 @@ class LeaderboardContentState extends State<LeaderboardContent> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    return Positioned.fill(
+    return Positioned(
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
       child: Container(
         color: Colors.black.withOpacity(0.7),
         child: Column(
@@ -41,8 +54,9 @@ class LeaderboardContentState extends State<LeaderboardContent> {
           children: [
             Container(
               margin:
-                  const EdgeInsets.only(top: 8, bottom: 8, right: 8, left: 8),
+                  const EdgeInsets.only(top: 60, bottom: 8, right: 8, left: 8),
               width: double.infinity,
+              height: height - 180,
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
@@ -60,53 +74,50 @@ class LeaderboardContentState extends State<LeaderboardContent> {
                       top: 0,
                       bottom: 0,
                       child: KContainer()),
+
                   Positioned(
                     left: 0,
                     right: 0,
-                    top: -20,
-                    height: 64,
-                    child: KButton('', () {}),
-                  ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    top: -12,
-                    child: KText('setting'.tr, size: 24),
+                    top: -18,
+                    child: KButton(
+                      'leaderboard'.tr,
+                      () {
+                        Get.find<AppState>().back();
+                      },
+                      height: 40,
+                      size: 20,
+                      marginTop: 4,
+                    ),
                   ),
                   // FittedBox(
                   //   child: widget.drawImage,
                   //   fit: BoxFit.contain,
                   // )
 
-                  Positioned(
-                      top: 25,
-                      left: 0,
-                      bottom: 0,
-                      right: 0,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            RankItem(1, "MUTITA", 120),
-                            RankItem(2, "TIMA", 110),
-                            RankItem(3, "PAOPAO", 100),
-                            RankItem(4, "PAOPAO", 100),
-                            RankItem(5, "PAOPAO", 100),
-                            RankItem(33, "PAOPAO", 100),
-                            RankItem(33, "PAOPAO", 100),
-                            RankItem(33, "PAOPAO", 100),
-                            RankItem(33, "PAOPAO", 100),
-                            RankItem(33, "PAOPAO", 100),
-                            RankItem(33, "PAOPAO", 100),
-                            RankItem(33, "PAOPAO", 100),
-                            RankItem(33, "PAOPAO", 100),
-                            RankItem(33, "PAOPAO", 100),
-                            RankItem(33, "PAOPAO", 100),
-                            RankItem(33, "PAOPAO", 100),
-                          ],
-                        ),
-                      ))
+                  data.isEmpty
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 10,
+                          ),
+                        )
+                      : Positioned(
+                          top: 25,
+                          left: 0,
+                          bottom: 0,
+                          right: 0,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: data
+                                  .map(
+                                    (e) => RankItem(e.rank, e.username,
+                                        e.totalscore, e.star),
+                                  )
+                                  .toList(),
+                            ),
+                          ))
                 ],
               ),
             ),
@@ -123,76 +134,38 @@ class LeaderboardContentState extends State<LeaderboardContent> {
         ),
       ),
     );
-    // double width = MediaQuery.of(context).size.width;
-    // return Positioned.fill(
-    //   child: Container(
-    //     color: Colors.black.withOpacity(0.7),
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       children: [
-    //         // Container(
-    //         //   margin: EdgeInsets.only(top: 8, bottom: 8, right: 8, left: 8),
-    //         //   width: double.infinity,
-    //         //   child: Stack(
-    //         //     clipBehavior: Clip.none,
-    //         //     children: [
-    //         //       // Positioned(left: 8, child: Text("HI")),
-    //         //       Positioned(
-    //         //         left: 0,
-    //         //         right: 0,
-    //         //         top: -12,
-    //         //         child: KButton('', () {}),
-    //         //         height: 64,
-    //         //       ),
-    //         //       Positioned(
-    //         //         left: 0,
-    //         //         right: 0,
-    //         //         top: -6,
-    //         //         child: KText('rank'.tr, size: 24),
-    //         //       ),
-    //         //       // FittedBox(
-    //         //       //   child: widget.drawImage,
-    //         //       //   fit: BoxFit.contain,
-    //         //       // )
-
-    //         //       Positioned(
-    //         //           top: 25,
-    //         //           left: 0,
-    //         //           bottom: 0,
-    //         //           right: 0,
-    //         //           child: SingleChildScrollView(
-    //         //             scrollDirection: Axis.vertical,
-    //         //             child: Column(
-    //         //               mainAxisAlignment: MainAxisAlignment.start,
-    //         //               children: [
-    //         //                 RankItem(1, "MUTITA", 120),
-    //         //                 RankItem(2, "TIMA", 110),
-    //         //                 RankItem(3, "PAOPAO", 100),
-    //         //                 RankItem(4, "PAOPAO", 100),
-    //         //                 RankItem(5, "PAOPAO", 100),
-    //         //                 RankItem(33, "PAOPAO", 100),
-    //         //               ],
-    //         //             ),
-    //         //           ))
-    //         //     ],
-    //         //   ),
-    //         // ),
-    //         KButton(
-    //           'close'.tr,
-    //           () {
-    //             Get.find<AppState>().back();
-    //           },
-    //           height: 40,
-    //           size: 20,
-    //           marginTop: 4,
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 
-  Widget RankItem(int rank, String name, int score) {
+  Widget RankItem(int rank, String name, int score, int star) {
+    List<Widget> stars = [];
+    if (star == 0) {
+      stars = [
+        SvgPicture.asset('assets/ui/ui_star_dis.svg', width: 24),
+        SvgPicture.asset('assets/ui/ui_star_dis.svg', width: 24),
+        SvgPicture.asset('assets/ui/ui_star_dis.svg', width: 24),
+      ];
+    }
+    if (star == 1) {
+      stars = [
+        SvgPicture.asset('assets/ui/ui_star_en.svg', width: 24),
+        SvgPicture.asset('assets/ui/ui_star_dis.svg', width: 24),
+        SvgPicture.asset('assets/ui/ui_star_dis.svg', width: 24),
+      ];
+    }
+    if (star == 2) {
+      stars = [
+        SvgPicture.asset('assets/ui/ui_star_en.svg', width: 24),
+        SvgPicture.asset('assets/ui/ui_star_en.svg', width: 24),
+        SvgPicture.asset('assets/ui/ui_star_dis.svg', width: 24),
+      ];
+    }
+    if (star == 3) {
+      stars = [
+        SvgPicture.asset('assets/ui/ui_star_en.svg', width: 24),
+        SvgPicture.asset('assets/ui/ui_star_en.svg', width: 24),
+        SvgPicture.asset('assets/ui/ui_star_en.svg', width: 24),
+      ];
+    }
     return Container(
       margin: const EdgeInsets.only(left: 16, right: 8, top: 8),
       padding: const EdgeInsets.all(0),
@@ -211,14 +184,14 @@ class LeaderboardContentState extends State<LeaderboardContent> {
                       ),
                     ),
                     Positioned(
-                      left: 17,
-                      top: 7,
+                      left: 19,
+                      top: 11,
                       child: Text(
                         '$rank',
                         style: const TextStyle(
                           fontFamily: 'ChangaOne',
                           color: Colors.white,
-                          fontSize: 24,
+                          fontSize: 16,
                         ),
                       ),
                     )
@@ -233,7 +206,7 @@ class LeaderboardContentState extends State<LeaderboardContent> {
                       style: const TextStyle(
                         fontFamily: 'ChangaOne',
                         color: Colors.white,
-                        fontSize: 24,
+                        fontSize: 16,
                       ),
                     ),
                   ),
@@ -244,24 +217,11 @@ class LeaderboardContentState extends State<LeaderboardContent> {
           Text(
             name,
             style: const TextStyle(
-                fontFamily: 'ChangaOne', color: Colors.white, fontSize: 24),
+                fontFamily: 'ChangaOne', color: Colors.white, fontSize: 16),
           ),
           const Spacer(),
           Row(
-            children: [
-              SvgPicture.asset(
-                'assets/ui/ui_star_en.svg',
-                width: 24,
-              ),
-              SvgPicture.asset(
-                'assets/ui/ui_star_en.svg',
-                width: 24,
-              ),
-              SvgPicture.asset(
-                'assets/ui/ui_star_en.svg',
-                width: 24,
-              ),
-            ],
+            children: stars,
           ),
           const SizedBox(
             width: 8,
@@ -271,7 +231,7 @@ class LeaderboardContentState extends State<LeaderboardContent> {
             child: Text(
               '$score',
               style: const TextStyle(
-                  fontFamily: 'ChangaOne', color: Colors.white, fontSize: 24),
+                  fontFamily: 'ChangaOne', color: Colors.white, fontSize: 16),
             ),
           ),
         ],

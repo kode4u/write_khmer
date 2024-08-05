@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
 
+import '../../services/api.dart';
 import '../../widgets/animated_svg.dart';
 import '../../widgets/grid_widget.dart';
 import '../../widgets/k_container.dart';
@@ -51,13 +52,16 @@ class DrawContentState extends State<DrawContent> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width - 16;
-    Get.find<AppState>();
+    AppState app = Get.find<AppState>();
     return Stack(
       children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(
+              height: 100,
+            ),
             Stack(
               children: [
                 Container(
@@ -79,10 +83,18 @@ class DrawContentState extends State<DrawContent> {
                   width: 160,
                   height: 160,
                   child: Center(
-                      child: AnimatedSvg(
-                    filename:
-                        'assets/alphabet/${Get.find<AppState>().data[Get.find<AppState>().selectedIndex.value]['c'].toString()}.svg',
-                  )),
+                    child: Obx(() {
+                      final currentKey = app.currentKey.value;
+                      final selectedIndex = app.selectedIndex.value;
+                      final filename =
+                          'assets/alphabet/${app.allData[currentKey][selectedIndex]['c']}.svg';
+                      print('file name change $filename');
+                      return AnimatedSvg(
+                        key: Key(filename),
+                        filename: filename,
+                      );
+                    }),
+                  ),
                 ),
               ],
             ),
@@ -113,30 +125,24 @@ class DrawContentState extends State<DrawContent> {
                           gridColor: Colors.black87),
                     ),
                   if (showText)
-                    SizedBox(
-                      width: width,
-                      height: width,
-                      child: RepaintBoundary(
-                        key: _textKey,
-                        child: Obx(
-                          () => CustomPaint(
-                            painter: TextPainterWidget(
-                                Get.find<AppState>()
-                                    .data[Get.find<AppState>()
-                                        .selectedIndex
-                                        .value]['c']
-                                    .toString(),
-                                Get.find<AppState>()
-                                        .data[Get.find<AppState>()
-                                            .selectedIndex
-                                            .value]['font']
-                                        ?.toString() ??
-                                    'Sr'),
-                            size: Size(width, width),
+                    Obx(() => SizedBox(
+                          width: width,
+                          height: width,
+                          child: RepaintBoundary(
+                            key: _textKey,
+                            child: CustomPaint(
+                              painter: TextPainterWidget(
+                                  app.allData[app.currentKey.value]
+                                          [app.selectedIndex.value]['c']
+                                      .toString(),
+                                  app.allData[app.currentKey.value]
+                                              [app.selectedIndex.value]['font']
+                                          ?.toString() ??
+                                      'Thin-No-Dot'),
+                              size: Size(width, width),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
+                        )),
                   if (showDrawing)
                     SizedBox(
                       width: width,
@@ -171,15 +177,19 @@ class DrawContentState extends State<DrawContent> {
                     () => Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Get.find<AppState>().selectedIndex.value == 0
+                        app.selectedIndex.value == 0
                             ? const SizedBox(
                                 width: 28,
                                 height: 28,
                               )
                             : KIconButton('assets/ui/ui_previous.svg', () {
-                                if (Get.find<AppState>().selectedIndex > 0) {
-                                  Get.find<AppState>().selectedIndex--;
+                                if (app.selectedIndex > 0) {
+                                  app.selectedIndex--;
                                 }
+                                setState(() {
+                                  correctness = 0.0;
+                                  points.clear();
+                                });
                               }, height: 32),
                         const SizedBox(width: 30),
                         KIconButton(
@@ -193,17 +203,22 @@ class DrawContentState extends State<DrawContent> {
                           height: 40,
                         ),
                         const SizedBox(width: 30),
-                        Get.find<AppState>().selectedIndex.value ==
-                                Get.find<AppState>().data.length - 1
+                        app.selectedIndex.value ==
+                                app.allData[app.currentKey.value].length - 1
                             ? const SizedBox(
                                 width: 28,
                                 height: 28,
                               )
                             : KIconButton('assets/ui/ui_next.svg', () {
-                                if (Get.find<AppState>().selectedIndex.value <
-                                    Get.find<AppState>().data.length - 1) {
-                                  Get.find<AppState>().selectedIndex.value++;
+                                if (app.selectedIndex.value <
+                                    app.allData[app.currentKey.value].length -
+                                        1) {
+                                  app.selectedIndex.value++;
                                 }
+                                setState(() {
+                                  correctness = 0.0;
+                                  points.clear();
+                                });
                               }, height: 32),
                       ],
                     ),
@@ -316,6 +331,10 @@ class DrawContentState extends State<DrawContent> {
       correctness = coverageRatio;
     });
 
+    if (coverageRatio < 0.8) {
+      return 0;
+    }
+
     //if
     if (correctness >= 0.80) {
       star = 3;
@@ -325,10 +344,25 @@ class DrawContentState extends State<DrawContent> {
       star = 1;
     }
 
+    //update data and save
+    AppState app = Get.find<AppState>();
+    app.allData[app.currentKey.value][app.selectedIndex.value]['star'] = star;
+    app.saveData();
+
+    //calcute score
+    app.score.value = app.calculateTotalStars();
+
+    //update score to server
+    if (app.user.isNotEmpty) {
+      updateUserScore(app.user['id'], app.score.value);
+    }
+
 //if draw pixel is too much star = 0
+    print('totaldrawpixel $totalDrawPixel');
+    print('totalpixel $totalPixels');
     if (totalDrawPixel > 3 * totalPixels) {
       star = 0;
-      correctness = 0.59;
+      correctness = 0.0;
       setState(() {
         showTryAgain = true;
       });
@@ -397,7 +431,7 @@ class ImagePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
 
 class TextPainterWidget extends CustomPainter {
@@ -430,5 +464,5 @@ class TextPainterWidget extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
