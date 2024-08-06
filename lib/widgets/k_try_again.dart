@@ -69,12 +69,10 @@ class KTryAgainState extends State<KTryAgain> {
 
     return Positioned.fill(
       child: Container(
-        color: Colors.black.withOpacity(0.7),
+        color: Colors.black.withOpacity(0.9),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Lottie.asset('assets/tick.json', width: 100),
-            const SizedBox(height: 20),
             Text(
               "try_again".tr,
               style: TextStyle(
@@ -111,6 +109,9 @@ class KTryAgainState extends State<KTryAgain> {
             KButton(
               "close".tr,
               widget.onClose,
+              size: 24,
+              height: 36,
+              marginTop: 0,
             ),
           ],
         ),

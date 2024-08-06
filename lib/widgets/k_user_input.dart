@@ -41,7 +41,7 @@ class KUserInputState extends State<KUserInput> {
   Widget build(BuildContext context) {
     return Positioned.fill(
       child: Container(
-        color: Colors.black.withOpacity(0.7),
+        color: Colors.black.withOpacity(0.9),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -116,9 +116,9 @@ class KUserInputState extends State<KUserInput> {
                       marginTop: 14,
                       width: 96,
                       height: 48,
-                      () {
+                      () async {
                         if (username.text.isNotEmpty) {
-                          createUser(0, username.text);
+                          await createUser(0, username.text);
                         }
                         if (Get.find<AppState>().user.isNotEmpty) {
                           Get.find<AppState>().switchScreen(Screen.category);

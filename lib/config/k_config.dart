@@ -8,10 +8,15 @@ setTheme() {
   KConfig.margin = 8.0;
   KConfig.radius = 8.0;
   KConfig.ads = {
-    'app': Platform.isAndroid ? 'ca-app-pub-6380644639947620~2023331179' : '',
-    'banner':
-        Platform.isAndroid ? 'ca-app-pub-6380644639947620/9051295027' : '',
-    'inter': Platform.isAndroid ? 'ca-app-pub-6380644639947620/2294600395' : '',
+    'app': Platform.isAndroid
+        ? 'ca-app-pub-6380644639947620~8205405720'
+        : 'ca-app-pub-6380644639947620~1968800863',
+    'banner': Platform.isAndroid
+        ? 'ca-app-pub-6380644639947620/5344272819'
+        : 'ca-app-pub-6380644639947620/7435249538',
+    'inter': Platform.isAndroid
+        ? 'ca-app-pub-6380644639947620/3687576219'
+        : 'ca-app-pub-6380644639947620/2414857146',
   };
   KConfig.android_package = 'com.kode4u.khvnlotteryresult';
   KConfig.ios_package = '';

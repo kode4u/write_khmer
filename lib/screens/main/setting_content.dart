@@ -39,7 +39,7 @@ class SettingContentState extends State<SettingContent> {
   Widget build(BuildContext context) {
     return Positioned.fill(
       child: Container(
-        color: Colors.black.withOpacity(0.7),
+        color: Colors.black.withOpacity(0.9),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -41,6 +41,7 @@ class DrawContentState extends State<DrawContent> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(const Duration(seconds: 1), _playSound);
   }
 
   @override
@@ -64,36 +65,52 @@ class DrawContentState extends State<DrawContent> {
             ),
             Stack(
               children: [
-                Container(
-                  clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16)),
-                  ),
-                  height: 160,
-                  width: 220,
-                  child: Image.asset(
-                    'assets/bg/frame.png',
-                    fit: BoxFit.cover,
+                GestureDetector(
+                  onTap: _playSound,
+                  child: Container(
+                    clipBehavior: Clip.antiAlias,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(16),
+                          topRight: Radius.circular(16)),
+                    ),
+                    height: 160,
+                    width: 220,
+                    child: Image.asset(
+                      'assets/bg/frame.png',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 30, right: 30),
-                  width: 160,
-                  height: 160,
-                  child: Center(
-                    child: Obx(() {
-                      final currentKey = app.currentKey.value;
-                      final selectedIndex = app.selectedIndex.value;
-                      final filename =
-                          'assets/alphabet/${app.allData[currentKey][selectedIndex]['c']}.svg';
-                      print('file name change $filename');
-                      return AnimatedSvg(
-                        key: Key(filename),
-                        filename: filename,
-                      );
-                    }),
+                GestureDetector(
+                  onTap: _playSound,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 30, right: 30),
+                    width: 160,
+                    height: 160,
+                    child: Center(
+                      child: Obx(() {
+                        final currentKey = app.currentKey.value;
+                        final selectedIndex = app.selectedIndex.value;
+                        var filename =
+                            'assets/alphabet/${app.allData[currentKey][selectedIndex]['c']}.svg';
+                        if (Get.find<AppState>().currentKey.value ==
+                            'data_alpha_leg') {
+                          filename =
+                              'assets/alphabet/${app.allData[currentKey][selectedIndex]['c']}.svg';
+                        }
+                        if (Get.find<AppState>().currentKey.value ==
+                            'data_alpha_en') {
+                          filename =
+                              'assets/alphabet/${app.allData[currentKey][selectedIndex]['c']}C.svg';
+                        }
+                        print('file name change $filename');
+                        return AnimatedSvg(
+                          key: Key(filename),
+                          filename: filename,
+                        );
+                      }),
+                    ),
                   ),
                 ),
               ],
@@ -135,10 +152,7 @@ class DrawContentState extends State<DrawContent> {
                                   app.allData[app.currentKey.value]
                                           [app.selectedIndex.value]['c']
                                       .toString(),
-                                  app.allData[app.currentKey.value]
-                                              [app.selectedIndex.value]['font']
-                                          ?.toString() ??
-                                      'Thin-No-Dot'),
+                                  'Thin-No-Dot'),
                               size: Size(width, width),
                             ),
                           ),
@@ -186,6 +200,7 @@ class DrawContentState extends State<DrawContent> {
                                 if (app.selectedIndex > 0) {
                                   app.selectedIndex--;
                                 }
+                                _playSound();
                                 setState(() {
                                   correctness = 0.0;
                                   points.clear();
@@ -195,6 +210,8 @@ class DrawContentState extends State<DrawContent> {
                         KIconButton(
                           'assets/ui/ui_wrong.svg',
                           () {
+                            _playSound();
+
                             setState(() {
                               correctness = 0.0;
                               points.clear();
@@ -215,6 +232,8 @@ class DrawContentState extends State<DrawContent> {
                                         1) {
                                   app.selectedIndex.value++;
                                 }
+                                _playSound();
+
                                 setState(() {
                                   correctness = 0.0;
                                   points.clear();
@@ -344,6 +363,26 @@ class DrawContentState extends State<DrawContent> {
       star = 1;
     }
 
+//if draw pixel is too much star = 0
+    print('totaldrawpixel $totalDrawPixel');
+    print('totalpixel $totalPixels');
+    if (totalDrawPixel > 3 * totalPixels) {
+      star = 0;
+      correctness = 0.0;
+      _playGameOver();
+      setState(() {
+        showTryAgain = true;
+      });
+      return 0;
+    }
+
+    if (correctness >= 0.6) {
+      _playLevelUp();
+      setState(() {
+        _showOverlay = true;
+      });
+    }
+
     //update data and save
     AppState app = Get.find<AppState>();
     app.allData[app.currentKey.value][app.selectedIndex.value]['star'] = star;
@@ -357,29 +396,30 @@ class DrawContentState extends State<DrawContent> {
       updateUserScore(app.user['id'], app.score.value);
     }
 
-//if draw pixel is too much star = 0
-    print('totaldrawpixel $totalDrawPixel');
-    print('totalpixel $totalPixels');
-    if (totalDrawPixel > 3 * totalPixels) {
-      star = 0;
-      correctness = 0.0;
-      setState(() {
-        showTryAgain = true;
-      });
-      return 0;
-    }
-
-    if (correctness >= 0.6) {
-      _playLevelUp();
-      setState(() {
-        _showOverlay = true;
-      });
-    }
     return coverageRatio * 100;
   }
 
   Future<void> _playLevelUp() async {
     await _audioPlayer.play(AssetSource('sounds/levelup.mp3'));
+  }
+
+  Future<void> _playSound() async {
+    AppState app = Get.find<AppState>();
+    var filename =
+        '${app.allData[app.currentKey.value][app.selectedIndex.value]['c']}.mp3';
+    if (Get.find<AppState>().currentKey.value == 'data_alpha_leg') {
+      filename =
+          '${app.allData[app.currentKey.value][app.selectedIndex.value]['c']}.mp3';
+    }
+    if (Get.find<AppState>().currentKey.value == 'data_alpha_en') {
+      filename =
+          '${app.allData[app.currentKey.value][app.selectedIndex.value]['c']}C.mp3';
+    }
+    await _audioPlayer.play(AssetSource('voices/$filename'));
+  }
+
+  Future<void> _playGameOver() async {
+    await _audioPlayer.play(AssetSource('sounds/gameover2.mp3'));
   }
 
   int countPixel(Uint8List buffer) {

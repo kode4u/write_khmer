@@ -65,12 +65,10 @@ class DarkOverlayState extends State<DarkOverlay> {
 
     return Positioned.fill(
       child: Container(
-        color: Colors.black.withOpacity(0.7),
+        color: Colors.black.withOpacity(0.9),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Lottie.asset('assets/tick.json', width: 100),
-            const SizedBox(height: 20),
             const Text(
               "អបអរសាទរ",
               style: TextStyle(

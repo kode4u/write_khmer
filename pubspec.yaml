@@ -64,8 +64,8 @@ dependencies:
   audioplayers: ^6.0.0
 
 # RENAME PACKAGE
-# dart pub global run rename setAppName --targets ios,android --value "KH VN Lottery"
-# dart pub global run rename setBundleId --targets android --value "com.kode4u.khvnlotteryresult"
+# dart pub global run rename setAppName --targets ios,android --value "Write Khmer"
+# dart pub global run rename setBundleId --targets android,ios --value "com.kode4u.writekhmer"
 # COMMAND GENERATE ICON
 # dart run flutter_launcher_icons
 flutter_icons:
@@ -108,6 +108,7 @@ flutter:
     - assets/ui/
     - assets/animated/
     - assets/alphabet/
+    - assets/voices/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -125,10 +126,6 @@ flutter:
     - family: Moul
       fonts:
         - asset: assets/fonts/muollight.ttf
-    
-    - family: Content
-      fonts:
-        - asset: assets/fonts/content.ttf
     - family: Sr
       fonts:
         - asset: assets/fonts/sr.ttf
@@ -141,9 +138,6 @@ flutter:
     - family: Roboto
       fonts:
         - asset: assets/fonts/roboto.ttf
-    - family: Thin
-      fonts:
-        - asset: assets/fonts/thin.ttf
     - family: Thin-No-Dot
       fonts:
         - asset: assets/fonts/thin-no-dot.ttf

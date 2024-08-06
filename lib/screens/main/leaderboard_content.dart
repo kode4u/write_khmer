@@ -48,7 +48,7 @@ class LeaderboardContentState extends State<LeaderboardContent> {
       top: 0,
       bottom: 0,
       child: Container(
-        color: Colors.black.withOpacity(0.7),
+        color: Colors.black.withOpacity(0.9),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
