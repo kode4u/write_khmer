@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class KContainer extends StatelessWidget {
+  const KContainer({super.key});
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     double borderWidth = 3;
-    return Container(
+    return SizedBox(
       width: width,
       height: height,
       child: Stack(
@@ -23,8 +25,8 @@ class KContainer extends StatelessWidget {
                 ),
                 borderRadius:
                     BorderRadius.circular(16), // Adjust as per your needs
-                boxShadow: [
-                  const BoxShadow(
+                boxShadow: const [
+                  BoxShadow(
                     color: Color(0xFFFA6B49),
                     spreadRadius: 0,
                     blurRadius: 0,
@@ -48,7 +50,7 @@ class KContainer extends StatelessWidget {
                 ),
                 borderRadius:
                     BorderRadius.circular(14), // Adjust as per your needs
-                boxShadow: [
+                boxShadow: const [
                   // BoxShadow(
                   //   color: Color(0xFFFA6B49),
                   //   spreadRadius: 1,

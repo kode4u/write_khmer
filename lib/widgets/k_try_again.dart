@@ -1,12 +1,9 @@
-import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dictionary/widgets/k_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 
 class KTryAgain extends StatefulWidget {
   final bool showOverlay;
@@ -75,11 +72,11 @@ class KTryAgainState extends State<KTryAgain> {
           children: [
             Text(
               "try_again".tr,
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.white, fontFamily: "Sr", fontSize: 28),
             ),
             Container(
-              margin: EdgeInsets.only(top: 8, bottom: 8),
+              margin: const EdgeInsets.only(top: 8, bottom: 8),
               width: 200,
               height: 200,
               child: Stack(

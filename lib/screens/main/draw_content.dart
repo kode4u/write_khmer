@@ -123,7 +123,7 @@ class DrawContentState extends State<DrawContent> {
                   Positioned.fill(
                     child: SvgPicture.asset('assets/ui/ui_sq_box.svg'),
                   ),
-                  Positioned(
+                  const Positioned(
                       left: 0,
                       right: 0,
                       top: 0,

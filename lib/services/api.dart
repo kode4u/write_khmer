@@ -4,16 +4,12 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 import '../states/app_state.dart';
 
-final String url =
+const String url =
     'https://apps.kode4u.tech/flutter/write_khmer/leaderboard.php';
-final String api =
+const String api =
     'b4dbdba573c5780d49f68082eed8f2f29a5740e2d10981cf8fcd2ff528fccc31';
 Future<void> createUser(int totalScore, String name) async {
   final response = await http.post(

@@ -1,13 +1,10 @@
-import 'dart:ui';
 
-import 'package:dictionary/widgets/k_button.dart';
 import 'package:dictionary/widgets/k_button_2.dart';
 import 'package:dictionary/widgets/k_container.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:kode4u/utils/k_utils.dart';
-import 'package:lottie/lottie.dart';
 
 import '../screens/main/main_screen.dart';
 import '../services/api.dart';
@@ -30,11 +27,26 @@ class KUserInputState extends State<KUserInput> {
   @override
   void initState() {
     super.initState();
+    username.text = generateUniqueUsername();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  String generateUniqueUsername() {
+    // Get the current date and time
+    DateTime now = DateTime.now();
+
+    // Create a formatter for the desired format
+    DateFormat formatter = DateFormat('yyMMddHHmmss');
+
+    // Format the current date and time
+    String formattedDate = formatter.format(now);
+
+    // Return the formatted date and time as the unique username
+    return 'user_$formattedDate';
   }
 
   @override
@@ -53,7 +65,7 @@ class KUserInputState extends State<KUserInput> {
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 300,
                     height: 140,
                     child: KContainer(),
@@ -65,7 +77,7 @@ class KUserInputState extends State<KUserInput> {
                     child: Center(
                       child: Text(
                         "username".tr,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white,
                             fontFamily: "Sr",
                             fontSize: 18),
@@ -77,7 +89,7 @@ class KUserInputState extends State<KUserInput> {
                     left: 0,
                     right: 0,
                     child: Container(
-                      margin: EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(12),
                       child: TextField(
                         controller: username,
                         style: TextStyle(
@@ -89,7 +101,7 @@ class KUserInputState extends State<KUserInput> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: const BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),

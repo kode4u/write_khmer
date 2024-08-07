@@ -1,6 +1,4 @@
-import 'dart:convert';
 
-import 'package:get_storage/get_storage.dart';
 
 Map<String, dynamic> data = {
   'data_alpha': [

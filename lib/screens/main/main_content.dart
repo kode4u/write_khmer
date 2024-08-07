@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import '../../states/app_state.dart';
 import '../../widgets/k_icon_button.dart';
 import '../../widgets/k_menu_button.dart';
-import '../../widgets/k_progress.dart';
 import 'main_screen.dart';
 
 class MainContent extends StatefulWidget {

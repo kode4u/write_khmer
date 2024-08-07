@@ -77,6 +77,7 @@ class AppState extends GetxController {
     tapPlayer.stop();
   }
 
+  @override
   void dispose() {
     tapPlayer.dispose();
     bgPlayer.dispose();

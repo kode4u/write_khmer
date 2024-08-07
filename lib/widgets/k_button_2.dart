@@ -1,7 +1,6 @@
 import 'package:dictionary/states/app_state.dart';
 import 'package:dictionary/widgets/k_container.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dictionary/widgets/k_text.dart';
 import 'package:get/get.dart';
 
@@ -93,10 +92,10 @@ class KButton2State extends State<KButton2>
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     height: widget.height,
                     width: widget.width,
-                    child: KContainer(),
+                    child: const KContainer(),
                   ),
                   Positioned(
                     top: widget.marginTop,

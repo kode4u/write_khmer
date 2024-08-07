@@ -1,5 +1,4 @@
 import 'package:dictionary/widgets/k_button.dart';
-import 'package:dictionary/widgets/k_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -68,7 +67,7 @@ class LeaderboardContentState extends State<LeaderboardContent> {
                     width: double.infinity,
                     height: height - 240,
                   ),
-                  Positioned(
+                  const Positioned(
                       left: 0,
                       right: 0,
                       top: 0,

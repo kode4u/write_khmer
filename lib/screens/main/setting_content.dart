@@ -1,6 +1,5 @@
 import 'package:dictionary/widgets/k_button.dart';
 import 'package:dictionary/widgets/k_icon_check_button.dart';
-import 'package:dictionary/widgets/k_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -54,7 +53,7 @@ class SettingContentState extends State<SettingContent> {
                     width: double.infinity,
                     height: 200,
                   ),
-                  Positioned(
+                  const Positioned(
                       left: 0,
                       right: 0,
                       top: 0,
