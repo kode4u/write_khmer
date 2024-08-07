@@ -20,43 +20,47 @@ class CategoryContent extends StatelessWidget {
           right: 10,
           bottom: 10,
           child: Container(
-              margin: const EdgeInsets.only(top: 96),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  KButton("alphabet".tr, () {
-                    app.currentKey.value =
-                        KUtil.isEn() ? 'data_alpha_en' : 'data_alpha';
-                    app.switchScreen(Screen.level);
-                  }),
-                  KUtil.isEn()
-                      ? Container()
-                      : KButton("khmer_number".tr, () {
-                          app.currentKey.value = 'data_khmer_number';
-                          app.switchScreen(Screen.level);
-                        }),
-                  KButton("roman_number".tr, () {
-                    app.currentKey.value = 'data_number';
-                    app.switchScreen(Screen.level);
-                  }),
-                  KButton("alphabet_leg".tr, () {
-                    app.currentKey.value =
-                        KUtil.isEn() ? 'data_alpha_lower_en' : 'data_alpha_leg';
-                    app.switchScreen(Screen.level);
-                  }),
-                  KUtil.isEn()
-                      ? Container()
-                      : KButton("vowel".tr, () {
-                          app.currentKey.value = 'data_vowel';
-                          app.switchScreen(Screen.level);
-                        }),
-                  KUtil.isEn()
-                      ? Container()
-                      : KButton("independence_vowel".tr, () {
-                          app.currentKey.value = 'data_independence_vowel';
-                          app.switchScreen(Screen.level);
-                        }),
-                ],
+              margin: const EdgeInsets.only(top: 180),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    KButton("alphabet".tr, () {
+                      app.currentKey.value =
+                          KUtil.isEn() ? 'data_alpha_en' : 'data_alpha';
+                      app.switchScreen(Screen.level);
+                    }),
+                    KUtil.isEn()
+                        ? Container()
+                        : KButton("khmer_number".tr, () {
+                            app.currentKey.value = 'data_khmer_number';
+                            app.switchScreen(Screen.level);
+                          }),
+                    KButton("roman_number".tr, () {
+                      app.currentKey.value = 'data_number';
+                      app.switchScreen(Screen.level);
+                    }),
+                    KButton("alphabet_leg".tr, () {
+                      app.currentKey.value = KUtil.isEn()
+                          ? 'data_alpha_lower_en'
+                          : 'data_alpha_leg';
+                      app.switchScreen(Screen.level);
+                    }),
+                    KUtil.isEn()
+                        ? Container()
+                        : KButton("vowel".tr, () {
+                            app.currentKey.value = 'data_vowel';
+                            app.switchScreen(Screen.level);
+                          }),
+                    KUtil.isEn()
+                        ? Container()
+                        : KButton("independence_vowel".tr, () {
+                            app.currentKey.value = 'data_independence_vowel';
+                            app.switchScreen(Screen.level);
+                          }),
+                  ],
+                ),
               )),
         ),
       ],

@@ -1,4 +1,3 @@
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dictionary/widgets/k_button.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +65,7 @@ class KTryAgainState extends State<KTryAgain> {
 
     return Positioned.fill(
       child: Container(
-        color: Colors.black.withOpacity(0.9),
+        color: Colors.black.withOpacity(0.7),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

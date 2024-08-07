@@ -98,12 +98,17 @@ class _MainScreenState extends State<MainScreen> {
               left: 10,
               right: 10,
               child: Center(
-                child: Obx(() => KGradientOutlineText(
-                      Get.find<AppState>().user['username'] == null
-                          ? ''
-                          : "${'welcome'.tr} ${Get.find<AppState>().user['username']}",
-                      fontSize: 24,
-                    )),
+                child: Obx(
+                  () => [Screen.draw]
+                          .contains(Get.find<AppState>().currentScreen.value)
+                      ? Container()
+                      : Obx(() => KGradientOutlineText(
+                            Get.find<AppState>().user['username'] == null
+                                ? ''
+                                : "${'welcome'.tr} ${Get.find<AppState>().user['username']}",
+                            fontSize: 24,
+                          )),
+                ),
               ),
             ),
             Obx(

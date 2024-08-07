@@ -110,4 +110,11 @@ class AppState extends GetxController {
     //calcute score
     score.value = calculateTotalStars();
   }
+
+  void resetData() {
+    //when logout
+    user.value = {};
+    allData.value = data;
+    score.value = 0;
+  }
 }

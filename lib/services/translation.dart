@@ -21,6 +21,7 @@ Map<String, Map<String, String>> get translation => {
         'input_name': 'Please input name',
         'username': 'Username',
         'welcome': 'Welcome',
+        'logout': 'Reset Data',
         'ok': 'OK'
       },
       'km_KH': {
@@ -46,6 +47,7 @@ Map<String, Map<String, String>> get translation => {
         'input_name': 'សូមបញ្ចូលឈ្មោះ',
         'welcome': 'ស្វាគមន៍',
         'username': 'ឈ្មោះ',
+        'logout': 'លេងសារឡើងវិញ',
         'ok': 'យល់ព្រម'
       },
     };

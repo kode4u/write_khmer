@@ -47,7 +47,7 @@ class LeaderboardContentState extends State<LeaderboardContent> {
       top: 0,
       bottom: 0,
       child: Container(
-        color: Colors.black.withOpacity(0.9),
+        color: Colors.black.withOpacity(0.7),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -213,10 +213,13 @@ class LeaderboardContentState extends State<LeaderboardContent> {
           const SizedBox(
             width: 12,
           ),
-          Text(
-            name,
-            style: const TextStyle(
-                fontFamily: 'ChangaOne', color: Colors.white, fontSize: 16),
+          Expanded(
+            child: Text(
+              name,
+              overflow: TextOverflow.fade,
+              style: const TextStyle(
+                  fontFamily: 'ChangaOne', color: Colors.white, fontSize: 16),
+            ),
           ),
           const Spacer(),
           Row(

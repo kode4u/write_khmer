@@ -1,10 +1,14 @@
+import 'dart:ui';
 
+import 'package:dictionary/widgets/k_button.dart';
 import 'package:dictionary/widgets/k_button_2.dart';
 import 'package:dictionary/widgets/k_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kode4u/utils/k_utils.dart';
+import 'package:lottie/lottie.dart';
 
 import '../screens/main/main_screen.dart';
 import '../services/api.dart';
@@ -36,24 +40,17 @@ class KUserInputState extends State<KUserInput> {
   }
 
   String generateUniqueUsername() {
-    // Get the current date and time
     DateTime now = DateTime.now();
-
-    // Create a formatter for the desired format
     DateFormat formatter = DateFormat('yyMMddHHmmss');
-
-    // Format the current date and time
     String formattedDate = formatter.format(now);
-
-    // Return the formatted date and time as the unique username
-    return 'user_$formattedDate';
+    return 'u$formattedDate';
   }
 
   @override
   Widget build(BuildContext context) {
     return Positioned.fill(
       child: Container(
-        color: Colors.black.withOpacity(0.9),
+        color: Colors.black.withOpacity(0.7),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -65,7 +62,7 @@ class KUserInputState extends State<KUserInput> {
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  const SizedBox(
+                  Container(
                     width: 300,
                     height: 140,
                     child: KContainer(),
