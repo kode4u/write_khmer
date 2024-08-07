@@ -267,7 +267,7 @@ class SettingContentState extends State<SettingContent> {
             ),
             const Spacer(),
             Container(
-              margin: EdgeInsets.only(bottom: 6, right: 10),
+              margin: const EdgeInsets.only(bottom: 6, right: 10),
               width: 38,
               child: SvgPicture.asset('assets/ui/ui_stop.svg'),
             ),

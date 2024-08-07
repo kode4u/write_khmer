@@ -37,11 +37,12 @@ class DrawContentState extends State<DrawContent> {
   final AudioPlayer _audioPlayer = AudioPlayer();
   bool isProcessing = false;
   int star = 0;
+  int countDraw = 0;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 1), _playSound);
+    Future.delayed(const Duration(seconds: 0), _playSound);
   }
 
   @override
@@ -275,36 +276,39 @@ class DrawContentState extends State<DrawContent> {
                 points.clear();
               });
             }),
-        // if (capturedImage != null)
-        //   Positioned(
-        //     left: 0,
-        //     top: 0,
-        //     width: 100,
-        //     height: 100,
-        //     child: CustomPaint(
-        //       painter: ImagePainter(capturedImage!),
-        //     ),
-        //   ),
-        // if (capturedTextImage != null)
-        //   Positioned(
-        //     left: 0,
-        //     top: 0,
-        //     width: 100,
-        //     height: 100,
-        //     child: CustomPaint(
-        //       painter: ImagePainter(capturedTextImage!),
-        //     ),
-        //   )
+        if (capturedImage != null)
+          Positioned(
+            left: 0,
+            top: 0,
+            width: 100,
+            height: 100,
+            child: CustomPaint(
+              painter: ImagePainter(capturedImage!),
+            ),
+          ),
+        if (capturedTextImage != null)
+          Positioned(
+            left: 0,
+            top: 0,
+            width: 100,
+            height: 100,
+            child: CustomPaint(
+              painter: ImagePainter(capturedTextImage!),
+            ),
+          )
       ],
     );
   }
 
   void _onPanUpdate(DragUpdateDetails details) {
-    final RenderBox renderBox =
-        _key.currentContext!.findRenderObject() as RenderBox;
-    setState(() {
-      points.add(renderBox.globalToLocal(details.globalPosition));
-    });
+    countDraw++;
+    if (countDraw % 2 == 0) {
+      final RenderBox renderBox =
+          _key.currentContext!.findRenderObject() as RenderBox;
+      setState(() {
+        points.add(renderBox.globalToLocal(details.globalPosition));
+      });
+    }
   }
 
   void _onPanEnd() async {
@@ -317,14 +321,14 @@ class DrawContentState extends State<DrawContent> {
   Future<void> _captureDrawing() async {
     final RenderRepaintBoundary boundary =
         _key.currentContext?.findRenderObject() as RenderRepaintBoundary;
-    final ui.Image image = await boundary.toImage(pixelRatio: 1.0);
+    final ui.Image image = await boundary.toImage(pixelRatio: 0.1);
     capturedImage = image;
   }
 
   Future<void> _captureTextImage() async {
     final RenderRepaintBoundary textBoundary =
         _textKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
-    final ui.Image textImage = await textBoundary.toImage(pixelRatio: 1.0);
+    final ui.Image textImage = await textBoundary.toImage(pixelRatio: 0.1);
     capturedTextImage = textImage;
   }
 
@@ -374,9 +378,9 @@ class DrawContentState extends State<DrawContent> {
     }
 
     //if
-    if (correctness >= 0.80) {
+    if (correctness >= 0.90) {
       star = 3;
-    } else if (correctness >= 0.70) {
+    } else if (correctness >= 0.75) {
       star = 2;
     } else if (correctness >= 0.60) {
       star = 1;
