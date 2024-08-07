@@ -124,11 +124,12 @@ class DrawContentState extends State<DrawContent> {
                     child: SvgPicture.asset('assets/ui/ui_sq_box.svg'),
                   ),
                   const Positioned(
-                      left: 0,
-                      right: 0,
-                      top: 0,
-                      bottom: 0,
-                      child: KContainer()),
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    child: KContainer(),
+                  ),
                   if (showGrid)
                     Container(
                       clipBehavior: Clip.antiAlias,
@@ -245,7 +246,7 @@ class DrawContentState extends State<DrawContent> {
                 ),
               ],
             ),
-            Text("Correctness: ${correctness.toStringAsFixed(2)}"),
+            // Text("Correctness: ${correctness.toStringAsFixed(2)}"),
           ],
         ),
         DarkOverlay(
@@ -274,6 +275,26 @@ class DrawContentState extends State<DrawContent> {
                 points.clear();
               });
             }),
+        // if (capturedImage != null)
+        //   Positioned(
+        //     left: 0,
+        //     top: 0,
+        //     width: 100,
+        //     height: 100,
+        //     child: CustomPaint(
+        //       painter: ImagePainter(capturedImage!),
+        //     ),
+        //   ),
+        // if (capturedTextImage != null)
+        //   Positioned(
+        //     left: 0,
+        //     top: 0,
+        //     width: 100,
+        //     height: 100,
+        //     child: CustomPaint(
+        //       painter: ImagePainter(capturedTextImage!),
+        //     ),
+        //   )
       ],
     );
   }
@@ -289,9 +310,7 @@ class DrawContentState extends State<DrawContent> {
   void _onPanEnd() async {
     points.add(null); // End of line
     await _captureDrawing();
-    if (capturedTextImage == null) {
-      await _captureTextImage();
-    }
+    await _captureTextImage();
     _calculateCoveragePercentage(capturedImage!, capturedTextImage!);
   }
 
