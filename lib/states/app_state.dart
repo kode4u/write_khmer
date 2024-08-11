@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dictionary/data/data.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:kode4u/utils/k_ads.dart';
@@ -37,6 +38,7 @@ class AppState extends GetxController {
   void back() {
     if (currentScreen.value == Screen.main) {
       stack.clear();
+      SystemNavigator.pop();
       return;
     }
     if (stack.isEmpty) return;

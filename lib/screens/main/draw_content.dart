@@ -258,7 +258,13 @@ class DrawContentState extends State<DrawContent> {
             ),
             numStars: star,
             onClose: () {
+              if (app.selectedIndex.value <
+                  app.allData[app.currentKey.value].length - 1) {
+                app.selectedIndex.value++;
+              }
+              _playSound();
               setState(() {
+                correctness = 0.0;
                 _showOverlay = false;
                 points.clear();
               });
@@ -276,26 +282,26 @@ class DrawContentState extends State<DrawContent> {
                 points.clear();
               });
             }),
-        if (capturedImage != null)
-          Positioned(
-            left: 0,
-            top: 0,
-            width: 100,
-            height: 100,
-            child: CustomPaint(
-              painter: ImagePainter(capturedImage!),
-            ),
-          ),
-        if (capturedTextImage != null)
-          Positioned(
-            left: 0,
-            top: 0,
-            width: 100,
-            height: 100,
-            child: CustomPaint(
-              painter: ImagePainter(capturedTextImage!),
-            ),
-          )
+        // if (capturedImage != null)
+        //   Positioned(
+        //     left: 0,
+        //     top: 0,
+        //     width: 100,
+        //     height: 100,
+        //     child: CustomPaint(
+        //       painter: ImagePainter(capturedImage!),
+        //     ),
+        //   ),
+        // if (capturedTextImage != null)
+        //   Positioned(
+        //     left: 0,
+        //     top: 0,
+        //     width: 100,
+        //     height: 100,
+        //     child: CustomPaint(
+        //       painter: ImagePainter(capturedTextImage!),
+        //     ),
+        //   )
       ],
     );
   }
@@ -321,14 +327,14 @@ class DrawContentState extends State<DrawContent> {
   Future<void> _captureDrawing() async {
     final RenderRepaintBoundary boundary =
         _key.currentContext?.findRenderObject() as RenderRepaintBoundary;
-    final ui.Image image = await boundary.toImage(pixelRatio: 0.1);
+    final ui.Image image = await boundary.toImage(pixelRatio: 0.2);
     capturedImage = image;
   }
 
   Future<void> _captureTextImage() async {
     final RenderRepaintBoundary textBoundary =
         _textKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
-    final ui.Image textImage = await textBoundary.toImage(pixelRatio: 0.1);
+    final ui.Image textImage = await textBoundary.toImage(pixelRatio: 0.2);
     capturedTextImage = textImage;
   }
 
@@ -380,9 +386,9 @@ class DrawContentState extends State<DrawContent> {
     //if
     if (correctness >= 0.90) {
       star = 3;
-    } else if (correctness >= 0.75) {
+    } else if (correctness >= 0.80) {
       star = 2;
-    } else if (correctness >= 0.60) {
+    } else if (correctness >= 0.65) {
       star = 1;
     }
 
@@ -399,7 +405,7 @@ class DrawContentState extends State<DrawContent> {
       return 0;
     }
 
-    if (correctness >= 0.6) {
+    if (star > 0) {
       _playLevelUp();
       setState(() {
         _showOverlay = true;
@@ -423,10 +429,12 @@ class DrawContentState extends State<DrawContent> {
   }
 
   Future<void> _playLevelUp() async {
+    if (!Get.find<AppState>().enableSound) return;
     await _audioPlayer.play(AssetSource('sounds/levelup.mp3'));
   }
 
   Future<void> _playSound() async {
+    if (!Get.find<AppState>().enableSound) return;
     AppState app = Get.find<AppState>();
     var filename =
         '${app.allData[app.currentKey.value][app.selectedIndex.value]['c']}.mp3';

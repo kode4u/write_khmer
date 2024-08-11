@@ -193,8 +193,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ],
         ),
-        bottomNavigationBar:
-            Container(width: double.infinity, height: 60, color: Colors.blue),
+        bottomNavigationBar: Get.find<AppState>().ads.bannerWidget(),
       ),
     );
   }
