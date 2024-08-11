@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
 
+import '../../data/data.dart';
 import '../../services/api.dart';
 import '../../widgets/animated_svg.dart';
 import '../../widgets/grid_widget.dart';
@@ -93,22 +94,22 @@ class DrawContentState extends State<DrawContent> {
                       child: Obx(() {
                         final currentKey = app.currentKey.value;
                         final selectedIndex = app.selectedIndex.value;
-                        var filename =
-                            'assets/alphabet/${app.allData[currentKey][selectedIndex]['c']}.svg';
+                        var key =
+                            '${app.allData[currentKey][selectedIndex]['c']}.svg';
                         if (Get.find<AppState>().currentKey.value ==
                             'data_alpha_leg') {
-                          filename =
-                              'assets/alphabet/${app.allData[currentKey][selectedIndex]['c']}.svg';
+                          key =
+                              '${app.allData[currentKey][selectedIndex]['c']}.svg';
                         }
                         if (Get.find<AppState>().currentKey.value ==
                             'data_alpha_en') {
-                          filename =
-                              'assets/alphabet/${app.allData[currentKey][selectedIndex]['c']}C.svg';
+                          key =
+                              '${app.allData[currentKey][selectedIndex]['c']}C.svg';
                         }
-                        print('file name change $filename');
+                        print('file name change $key');
                         return AnimatedSvg(
-                          key: Key(filename),
-                          filename: filename,
+                          key: Key(key),
+                          data: svgData[key]!,
                         );
                       }),
                     ),

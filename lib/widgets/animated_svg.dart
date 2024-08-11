@@ -5,8 +5,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 class AnimatedSvg extends StatefulWidget {
-  final String filename;
-  const AnimatedSvg({super.key, required this.filename});
+  final String data;
+  const AnimatedSvg({super.key, required this.data});
 
   @override
   State<AnimatedSvg> createState() => _AnimatedSvgState();
@@ -70,7 +70,6 @@ class _AnimatedSvgState extends State<AnimatedSvg> {
   }
 
   Future<void> loadAsset() async {
-    final content = await rootBundle.loadString(widget.filename);
     svgData = """
 <!DOCTYPE html>
 <html lang="en">
@@ -85,7 +84,7 @@ class _AnimatedSvgState extends State<AnimatedSvg> {
 </style>
 </head>
 <body>
-  $content
+  ${widget.data}
 </body>
 </html>
       """;
