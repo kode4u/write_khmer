@@ -41,96 +41,86 @@ class LeaderboardContentState extends State<LeaderboardContent> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    return Positioned(
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: 0,
-      child: Container(
-        color: Colors.black.withOpacity(0.7),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin:
-                  const EdgeInsets.only(top: 60, bottom: 8, right: 8, left: 8),
-              width: double.infinity,
-              height: height - 180,
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  // SvgPicture.asset(
-                  //   'assets/ui/ui_sq_box.svg',
-                  //   width: width,
-                  // ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: height - 240,
-                  ),
-                  const Positioned(
-                      left: 0,
-                      right: 0,
-                      top: 0,
-                      bottom: 0,
-                      child: KContainer()),
+    return Container(
+      color: Colors.black.withOpacity(0.7),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin:
+                const EdgeInsets.only(top: 60, bottom: 8, right: 8, left: 8),
+            width: double.infinity,
+            height: height - 180,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                // SvgPicture.asset(
+                //   'assets/ui/ui_sq_box.svg',
+                //   width: width,
+                // ),
+                SizedBox(
+                  width: double.infinity,
+                  height: height - 240,
+                ),
+                const Positioned(
+                    left: 0, right: 0, top: 0, bottom: 0, child: KContainer()),
 
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    top: -18,
-                    child: KButton(
-                      'leaderboard'.tr,
-                      () {
-                        Get.find<AppState>().back();
-                      },
-                      height: 40,
-                      size: 20,
-                      marginTop: 4,
-                    ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: -18,
+                  child: KButton(
+                    'leaderboard'.tr,
+                    () {
+                      Get.find<AppState>().back();
+                    },
+                    height: 40,
+                    size: 20,
+                    marginTop: 4,
                   ),
-                  // FittedBox(
-                  //   child: widget.drawImage,
-                  //   fit: BoxFit.contain,
-                  // )
+                ),
+                // FittedBox(
+                //   child: widget.drawImage,
+                //   fit: BoxFit.contain,
+                // )
 
-                  data.isEmpty
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 10,
+                data.isEmpty
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 10,
+                        ),
+                      )
+                    : Positioned(
+                        top: 25,
+                        left: 0,
+                        bottom: 0,
+                        right: 0,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: data
+                                .map(
+                                  (e) => RankItem(
+                                      e.rank, e.username, e.totalscore, e.star),
+                                )
+                                .toList(),
                           ),
-                        )
-                      : Positioned(
-                          top: 25,
-                          left: 0,
-                          bottom: 0,
-                          right: 0,
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: data
-                                  .map(
-                                    (e) => RankItem(e.rank, e.username,
-                                        e.totalscore, e.star),
-                                  )
-                                  .toList(),
-                            ),
-                          ))
-                ],
-              ),
+                        ))
+              ],
             ),
-            KButton(
-              'close'.tr,
-              () {
-                Get.find<AppState>().back();
-              },
-              height: 40,
-              size: 20,
-              marginTop: 4,
-            ),
-          ],
-        ),
+          ),
+          KButton(
+            'close'.tr,
+            () {
+              Get.find<AppState>().back();
+            },
+            height: 40,
+            size: 20,
+            marginTop: 4,
+          ),
+        ],
       ),
     );
   }
