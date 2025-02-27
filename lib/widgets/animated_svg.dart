@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 class AnimatedSvg extends StatefulWidget {
   final String data;
